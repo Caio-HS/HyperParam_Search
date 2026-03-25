@@ -1,0 +1,122 @@
+//#include <fann_data.h>
+//#include <fann_train.h>
+#include <stdbool.h>
+#include <errno.h>
+#include <fann.h>
+
+
+#include "get_params.h"
+#include "create_ann.h"
+
+static int check_parameters(const PARAMETERS params);
+static int create_sparse_ann(struct fann ** restrict const ann, const PARAMETERS params);
+static int create_shortcut_ann(struct fann ** restrict const ann, const PARAMETERS params);
+static int create_common_ann(struct fann ** restrict  const ann, const PARAMETERS params);
+static int configure_ann(struct fann * restrict const ann, const PARAMETERS params);
+static int set_activation_function(struct fann * const ann, const PARAMETERS params);
+
+//static int set_training_algorithm(struct fann * restrict const ann, const PARAMETERS params);
+
+
+
+int create_configured_ann(struct fann ** restrict const ann, const PARAMETERS params)
+{
+    if(ann == NULL) { /**/ assert(0); /**/  return EINVAL;}
+
+    int error_code = 0;
+    error_code = check_parameters(params);
+    if(error_code != 0) {return error_code;}
+
+    if(params.sparsity < SPARSE_THERESHOLD)
+    {
+        error_code = create_sparse_ann(ann, params);
+        if(error_code != 0) {return error_code;}
+    } else if (params.network_type == FANN_NETTYPE_SHORTCUT) {
+        error_code = create_shortcut_ann(ann, params);
+        if(error_code != 0) {return error_code;}
+    } else {
+        error_code = create_common_ann(ann, params);
+        if(error_code != 0) {return error_code;}
+    }
+
+    error_code = configure_ann(*ann, params);
+    if(error_code != 0) {return error_code;}
+
+    return 0;
+
+}
+
+
+static int create_sparse_ann(struct fann ** restrict const ann, const PARAMETERS params)
+{
+    *ann = fann_create_sparse_array(params.sparsity, params.num_layers, params.neurons_by_layer);
+    if(*ann == NULL) {return ENOMEM;}
+    return 0;
+}
+
+static int create_shortcut_ann(struct fann ** restrict const ann, const PARAMETERS params)
+{
+    *ann = fann_create_shortcut_array(params.num_layers, params.neurons_by_layer);
+    if(*ann == NULL) {return ENOMEM;}
+    return 0;
+}
+
+
+static int create_common_ann(struct fann ** restrict const ann, const PARAMETERS params)
+{
+    *ann = fann_create_standard_array(params.num_layers, params.neurons_by_layer);
+    if(*ann == NULL) {return ENOMEM;}
+    return 0;
+}
+
+static int configure_ann(struct fann * restrict const ann, const PARAMETERS params)
+{
+    if(ann == NULL){return EINVAL;}
+
+    int error_code = 0;
+    fann_randomize_weights(ann, MIN_WEIGHT, MAX_WEIGHT);
+
+    fann_set_training_algorithm(ann, params.train_algorithm);
+
+    fann_set_train_error_function(ann, params.error_function);
+
+    error_code = set_activation_function(ann, params);
+    if(error_code != 0) {return 0;}
+
+    return 0;
+}
+
+static int set_activation_function(struct fann * const ann, const PARAMETERS params)
+{
+    for(unsigned int i = 0; i < params.num_layers; ++i)
+    {
+        fann_set_activation_function_layer(ann, *(params.activation_by_layer + i), i);
+    }
+    return 0;
+}
+
+/*static int set_training_algorithm(struct fann * restrict const ann, const PARAMETERS params)
+{
+    switch (params.train_algorithm) 
+    {
+        case FANN_TRAIN_INCREMENTAL:
+            fann_set_training_algorithm(ann, FANN_TRAIN_INCREMENTAL);
+            break;
+        case FANN_TRAIN_BATCH:
+            fann_set_training_algorithm(ann, FANN_TRAIN_BATCH);
+            break;
+        case FANN_TRAIN_RPROP:
+            fann_set_training_algorithm(ann, FANN_TRAIN_RPROP);
+            break;
+        case FANN_TRAIN_QUICKPROP:
+            fann_set_training_algorithm(ann, FANN_TRAIN_QUICKPROP);
+            break;
+        case FANN_TRAIN_SARPROP:
+            fann_set_training_algorithm(ann, FANN_TRAIN_SARPROP);
+            break;
+        default:
+            return EINVAL;
+    }
+
+    return 0;
+}*/
