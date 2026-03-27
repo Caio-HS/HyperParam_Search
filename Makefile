@@ -21,7 +21,7 @@ DEBUG_FLAGS = -O0 -Wall -Wextra -g -Wformat=2 -Wconversion -Wcast-qual \
               -Wduplicated-cond -Wduplicated-branches -Wjump-misses-init -Walloc-zero \
               -Walloca -Wtrampolines -Wnull-dereference -Wvla -Wmissing-prototypes \
               -Wmissing-declarations -Winline -Wunsafe-loop-optimizations -Wpacked \
-              -Wformat-overflow=2 -Wformat-truncation=2 -Wfloat-equal -Wsystem-headers \
+              -Wformat-overflow=2 -Wformat-truncation=2 -Wfloat-equal \
               -Woverlength-strings -Wstringop-overflow -Wstringop-truncation \
               -Wimplicit-fallthrough=5 -Waggregate-return -Wbad-function-cast -fanalyzer \
               -Wanalyzer-malloc-leak -Wanalyzer-use-of-uninitialized-value \
