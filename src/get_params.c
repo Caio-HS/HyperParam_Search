@@ -5,47 +5,47 @@
 
 #include "get_params.h"
 
+static int select_network_type(int input, NET_TYPE * restrict const network_type);
+static int select_error_function(int input, ERROR_FUNC * restrict const error_function);
+static int select_train_algorithm(int input, TRAIN_ALGO * restrict const train_algorithm);
+static int select_activation_function(int input, ACTIV_FUNC * restrict const activation_function);
+
 int get_parameter(const unsigned int argc, const char * restrict const argv[], PARAMETERS * restrict const parameters)
 {
+
+    int error_code = 0;
     /* Numero de camadas (n), ritmo de aprendizado, algoritmo de treino, metrica de erro, esparcidade, vetor de resposta 
     neuronios, funcao de ativacao e stepness /p camada, */
     if(argc < MINIMUM_PARAMS) {return INCORRECT_PARAMS_COUNT;}
 
     //Tem que haver ao menos uma camada oculta e no maximo 128 camadas
-    int (*parameters).num_layers = atoi(argv[1]);
-    if((*parameters).num_layers <= 0 || (*parameters).num_layers >= 128) {return INVALID_PARAM;}
+    int parameters->num_layers = atoi(argv[1]);
+    if(parameters->num_layers <= 0 || parameters->num_layers >= 128) {return INVALID_PARAM;}
 
-    if(argc != MINUMUM_PARAMS + ((*parameters).num_layers - 1) * 2) {return INCORRECT_PARAMS_COUNT;}
+    if(argc != MINUMUM_PARAMS + (parameters->num_layers - 1) * 2) {return INCORRECT_PARAMS_COUNT;}
 
-    
+    parameters->sparcity = atof(argv[2]);
+    if (parameters->sparcity < 0 || parameters->sparcity > 1) {return INVALID_PARAM;}
 
-    int train_algo = atoi(argv[3]);
+    error_code = select_network_type(atoi(argv[3]), &parameters->network_type);
+    if(error_code != 0) {return error_code;}
 
-    int error_metric = atoi(argv[4]);
+    error_code = select_train_algorithm(atoi(argv[4]), &parameters->train_algorithm);
+    if(error_code != 0) {return error_code;}
 
-    double esparcidade = atoi(argv[5]);
+    error_code = select_error_function(atoi(argv[5]), &parameters->error_function);
+    if(error_code != 0) {return error_code;}
 
-    int* response_vector = (int*) atoi(argv[6]);
+    parameters->activation_by_layer = malloc(sizeof(ACTIV_FUNC) * parameters->num_layers);
+    if(parameters->activation_by_layer == NULL) {return EOMEM;}
+    parameters->neuron_by_layer = malloc(sizeof(unsigned int) * parameters->num_layers);
+    if(parameters->neuron_by_layer == NULL) {return EOMEM;}
 
-    int neurons_by_layer[num_layers];
-    int layers_function[ num_layers];
-    int layers_stepness[ num_layers];
-
-    for(int i = 0; i < num_layers; i++) {neurons_by_layer[5 + i + 0 * num_layers];}
-    for(int i = 0; i < num_layers; i++) {layers_function[  5 + i + 1 * num_layers];}
-    for(int i = 0; i < num_layers; i++) {layers_stepness[  5 + i + 2 * num_layers];}
-
-
-
-    //Criacao estrutura da rede
-    struct fann *ann = NULL;
-
-
-
-    //Medida do tempo
-    int treino_inicio = 0;
-
-
-
+    for(int i = 0; i < num_layers; i++) {parameters->neuron_by_layer[i] = atoi(argv[(MINIMUM_PARAMS - 2) + parameters->num_layers * 0 + i]);}
+    for(int i = 0; i < num_layers; i++)
+    {
+        error_code = select_error_function(atoi(argv[(MINIMUM_PARAMS - 2) + parameters->num_layers * 1 + i]), &(parameters->activation_by_layer[i]));
+        if(error_code != 0) {return error_code;}
+    }
     return 0;
 }
