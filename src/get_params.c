@@ -5,10 +5,13 @@
 
 #include "get_params.h"
 
+
 static int select_network_type(int input, NET_TYPE * restrict const network_type);
 static int select_error_function(int input, ERROR_FUNC * restrict const error_function);
 static int select_train_algorithm(int input, TRAIN_ALGO * restrict const train_algorithm);
 static int select_activation_function(int input, ACTIV_FUNC * restrict const activation_function);
+
+
 
 int get_parameter(const unsigned int argc, const char * restrict const * restrict const argv, PARAMETERS * restrict const parameters)
 {
@@ -55,6 +58,7 @@ int get_parameter(const unsigned int argc, const char * restrict const * restric
     return 0;
 }
 
+
 static int select_network_type(int input, NET_TYPE * restrict const network_type)
 {
     switch(input)
@@ -70,6 +74,7 @@ static int select_network_type(int input, NET_TYPE * restrict const network_type
     }
 }
 
+
 static int select_error_function(int input, ERROR_FUNC * restrict const error_function)
 {
     switch(input)
@@ -84,6 +89,7 @@ static int select_error_function(int input, ERROR_FUNC * restrict const error_fu
             return INVALID_PARAM;
     }
 }
+
 
 static int select_train_algorithm(int input, TRAIN_ALGO * restrict const train_algorithm)
 {
@@ -108,6 +114,7 @@ static int select_train_algorithm(int input, TRAIN_ALGO * restrict const train_a
             return INVALID_PARAM;
     }
 }
+
 
 static int select_activation_function(int input, ACTIV_FUNC * restrict const activation_function)
 {
