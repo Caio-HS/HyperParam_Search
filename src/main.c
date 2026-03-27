@@ -6,18 +6,19 @@ int main(int argc, char * argv[])
     int error_code = 0;
 
     struct fann * restrict ann = NULL;
-    PARAMETERS params;
+    PARAMETERS params = { .neurons_by_layer = NULL, .activation_by_layer = NULL };
 
-    error_code = get_parameter(argc, argv, &params);
-    if(error_code != 0) {return error_code;}
+    error_code = get_parameter((unsigned int)argc, (const char **)argv, &params);
+    if(error_code != 0) {goto cleanup;}
     
     error_code = create_configured_ann(&ann, params); 
-    if(error_code != 0) {return error_code;}
+    if(error_code != 0) {goto cleanup;}
 
     //Essa secao deve virar uma funcao propria
-    free(params.neurons_by_layer);
-    free(params.activation_by_layer);
-    fann_destroy(ann);
+cleanup:
+    if (params.neurons_by_layer) free(params.neurons_by_layer);
+    if (params.activation_by_layer) free(params.activation_by_layer);
+    if (ann) fann_destroy(ann);
 
-    return 0;
+    return error_code;
 }
