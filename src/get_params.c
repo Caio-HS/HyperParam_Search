@@ -10,7 +10,7 @@ static int select_error_function(int input, ERROR_FUNC * restrict const error_fu
 static int select_train_algorithm(int input, TRAIN_ALGO * restrict const train_algorithm);
 static int select_activation_function(int input, ACTIV_FUNC * restrict const activation_function);
 
-int get_parameter(const unsigned int argc, const char * restrict const argv[], PARAMETERS * restrict const parameters)
+int get_parameter(const unsigned int argc, const char * restrict const * restrict const argv, PARAMETERS * restrict const parameters)
 {
     int error_code = 0;
     /* Numero de camadas (n), ritmo de aprendizado, algoritmo de treino, metrica de erro, esparcidade, vetor de resposta
