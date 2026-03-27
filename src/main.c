@@ -5,7 +5,7 @@ int main(int argc, char * argv[])
 {
     int error_code = 0;
 
-    struct fann * restrict ann = NULL;
+    struct fann * ann = NULL;
     PARAMETERS params = { .neurons_by_layer = NULL, .activation_by_layer = NULL };
 
     error_code = get_parameter((unsigned int)argc, (const char **)argv, &params);
