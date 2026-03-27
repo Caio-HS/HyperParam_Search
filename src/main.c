@@ -10,7 +10,7 @@ int main(int argc, char * argv[])
     struct fann * ann = NULL;
     PARAMETERS params = { .neurons_by_layer = NULL, .activation_by_layer = NULL };
 
-    error_code = get_parameter((unsigned int)argc, (const char **)argv, &params);
+    error_code = get_parameter((unsigned int)argc, (const char * const *)argv, &params);
     if(error_code != 0) {goto cleanup;}
     
     error_code = create_configured_ann(&ann, params); 
