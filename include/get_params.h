@@ -31,6 +31,6 @@ struct network_parameters
 
 typedef struct network_parameters PARAMETERS;
 
-int get_parameter(const unsigned int argc, const char * restrict const argv[], PARAMETERS * restrict const parameters);
+int get_parameter(const unsigned int argc, const char * restrict const * restrict const argv, PARAMETERS * restrict const parameters);
 
 #endif
