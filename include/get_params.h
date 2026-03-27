@@ -17,14 +17,15 @@ typedef enum network_type_enum NET_TYPE;
 struct network_parameters
 {
 	unsigned int num_layers;
-	unsigned int * restrict neurons_by_layer;
     float sparsity;
-    ACTIV_FUNC * restrict activation_by_layer;
-	//float * restrict steepness_by_layer;
-    //float learn_rate;
     NET_TYPE network_type;
     TRAIN_ALGO train_algorithm;
     ERROR_FUNC error_function;
+
+	unsigned int * restrict neurons_by_layer;
+    ACTIV_FUNC * restrict activation_by_layer;
+	//float * restrict steepness_by_layer;
+    //float learn_rate;
 };
 
 typedef struct network_parameters PARAMETERS;
