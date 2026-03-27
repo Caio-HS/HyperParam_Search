@@ -14,6 +14,9 @@ int main(int argc, char * argv[])
     error_code = create_configured_ann(&ann, params); 
     if(error_code != 0) {return error_code;}
 
+    //Essa secao deve virar uma funcao propria
+    free(params.neurons_by_layer);
+    free(params.activation_by_layer);
     fann_destroy(ann);
 
     return 0;
