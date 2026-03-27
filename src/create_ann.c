@@ -97,9 +97,9 @@ static int configure_ann(struct fann * restrict const ann, const PARAMETERS para
 
 static int set_activation_function(struct fann * const ann, const PARAMETERS params)
 {
-    for(int i = 1; i < params.num_layers; ++i)
+    for(unsigned int layer = 1; layer < params.num_layers; ++layer)
     {
-        fann_set_activation_function_layer(ann, *(params.activation_by_layer + i), i);
+        fann_set_activation_function_layer(ann, *(params.activation_by_layer + layer), (int) layer);
     }
     return 0;
 }
