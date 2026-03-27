@@ -1,13 +1,10 @@
-//#include <fann_data.h>
-//#include <fann_train.h>
 #include <stdbool.h>
 #include <errno.h>
-#include <assert.h>
 #include <fann.h>
-
 
 #include "get_params.h"
 #include "create_ann.h"
+
 
 static int check_parameters(const PARAMETERS params);
 static int create_sparse_ann(struct fann ** restrict const ann, const PARAMETERS params);
@@ -16,13 +13,11 @@ static int create_common_ann(struct fann ** restrict  const ann, const PARAMETER
 static int configure_ann(struct fann * restrict const ann, const PARAMETERS params);
 static int set_activation_function(struct fann * const ann, const PARAMETERS params);
 
-//static int set_training_algorithm(struct fann * restrict const ann, const PARAMETERS params);
-
 
 
 int create_configured_ann(struct fann ** restrict const ann, const PARAMETERS params)
 {
-    if(ann == NULL) { /**/ assert(0); /**/  return EINVAL;}
+    if(ann == NULL) { return EINVAL;}
 
     int error_code = 0;
     error_code = check_parameters(params);
@@ -47,6 +42,7 @@ int create_configured_ann(struct fann ** restrict const ann, const PARAMETERS pa
 
 }
 
+
 static int check_parameters(const PARAMETERS params)
 {
     if(params.num_layers == 0) {return EINVAL;}
@@ -63,6 +59,7 @@ static int create_sparse_ann(struct fann ** restrict const ann, const PARAMETERS
     return 0;
 }
 
+
 static int create_shortcut_ann(struct fann ** restrict const ann, const PARAMETERS params)
 {
     *ann = fann_create_shortcut_array(params.num_layers, params.neurons_by_layer);
@@ -77,6 +74,7 @@ static int create_common_ann(struct fann ** restrict const ann, const PARAMETERS
     if(*ann == NULL) {return ENOMEM;}
     return 0;
 }
+
 
 static int configure_ann(struct fann * restrict const ann, const PARAMETERS params)
 {
@@ -95,6 +93,7 @@ static int configure_ann(struct fann * restrict const ann, const PARAMETERS para
     return 0;
 }
 
+
 static int set_activation_function(struct fann * const ann, const PARAMETERS params)
 {
     for(unsigned int layer = 1; layer < params.num_layers; ++layer)
@@ -103,29 +102,3 @@ static int set_activation_function(struct fann * const ann, const PARAMETERS par
     }
     return 0;
 }
-
-/*static int set_training_algorithm(struct fann * restrict const ann, const PARAMETERS params)
-{
-    switch (params.train_algorithm) 
-    {
-        case FANN_TRAIN_INCREMENTAL:
-            fann_set_training_algorithm(ann, FANN_TRAIN_INCREMENTAL);
-            break;
-        case FANN_TRAIN_BATCH:
-            fann_set_training_algorithm(ann, FANN_TRAIN_BATCH);
-            break;
-        case FANN_TRAIN_RPROP:
-            fann_set_training_algorithm(ann, FANN_TRAIN_RPROP);
-            break;
-        case FANN_TRAIN_QUICKPROP:
-            fann_set_training_algorithm(ann, FANN_TRAIN_QUICKPROP);
-            break;
-        case FANN_TRAIN_SARPROP:
-            fann_set_training_algorithm(ann, FANN_TRAIN_SARPROP);
-            break;
-        default:
-            return EINVAL;
-    }
-
-    return 0;
-}*/
