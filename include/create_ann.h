@@ -7,6 +7,6 @@
 #define MAX_WEIGHT 0.2f
 #define SPARSE_THERESHOLD 0.005F
 
-int get_parameter(const unsigned int argc, const char * restrict const * restrict const argv, PARAMETERS * restrict const parameters);
+int create_configured_ann(struct fann ** restrict const ann, const PARAMETERS params);
 
 #endif
