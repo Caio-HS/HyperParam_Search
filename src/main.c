@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "get_params.h"
 #include "create_ann.h"
 
