@@ -4,14 +4,14 @@
 #include <stdbool.h>
 #include <fann.h>
 
-#define INCORRECT_PARAMS_COUNT 0b1
-#define INVALID_PARAM 0b10
-#define MINIMUM_PARAMS 7
+#define INCORRECT_PARAMS_COUNT 1u
+#define INVALID_PARAM 2u
+#define MINIMUM_PARAMS 8
 
-typedef enum error_function_enum ERROR_FUNC;
-typedef enum training_algorithm_enum TRAIN_ALGO;
-typedef enum activation_function_enum ACTIV_FUNC;
-typedef enum network_type_enum NET_TYPE;
+typedef enum fann_errorfunc_enum ERROR_FUNC;
+typedef enum fann_train_enum TRAIN_ALGO;
+typedef enum fann_activationfunc_enum ACTIV_FUNC;
+typedef enum fann_nettype_enum NET_TYPE;
 
 
 struct network_parameters
