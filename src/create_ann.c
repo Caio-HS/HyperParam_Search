@@ -2,6 +2,7 @@
 //#include <fann_train.h>
 #include <stdbool.h>
 #include <errno.h>
+#include <assert.h>
 #include <fann.h>
 
 
@@ -46,6 +47,14 @@ int create_configured_ann(struct fann ** restrict const ann, const PARAMETERS pa
 
 }
 
+static int check_parameters(const PARAMETERS params)
+{
+    if(params.num_layers == 0) {return EINVAL;}
+    if(params.neurons_by_layer == NULL) {return EINVAL;}
+    if(params.activation_by_layer == NULL) {return EINVAL;}
+    return 0;
+}
+
 
 static int create_sparse_ann(struct fann ** restrict const ann, const PARAMETERS params)
 {
@@ -81,7 +90,7 @@ static int configure_ann(struct fann * restrict const ann, const PARAMETERS para
     fann_set_train_error_function(ann, params.error_function);
 
     error_code = set_activation_function(ann, params);
-    if(error_code != 0) {return 0;}
+    if(error_code != 0) {return error_code;}
 
     return 0;
 }
