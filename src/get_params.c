@@ -40,7 +40,7 @@ int get_parameter(const unsigned int argc, const char * restrict const argv[], P
     parameters->neurons_by_layer = malloc(sizeof(unsigned int) * parameters->num_layers);
     if(parameters->neurons_by_layer == NULL) {return ENOMEM;}
 
-    const unsigned int neurons_start_idx = 6;
+    const unsigned int neurons_start_idx = MINIMUM_PARAMS - VETORIAL_PARAMS;
     const unsigned int activations_start_idx = neurons_start_idx + parameters->num_layers;
 
     for(unsigned int i = 0; i < parameters->num_layers; ++i) {
