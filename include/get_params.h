@@ -6,6 +6,7 @@
 
 #define INCORRECT_PARAMS_COUNT 1u
 #define INVALID_PARAM 2u
+#define VETORIAL_PARAMS 2u
 #define MINIMUM_PARAMS 8
 
 typedef enum fann_errorfunc_enum ERROR_FUNC;
