@@ -40,13 +40,16 @@ int get_parameter(const unsigned int argc, const char * restrict const argv[], P
     parameters->neurons_by_layer = malloc(sizeof(unsigned int) * parameters->num_layers);
     if(parameters->neurons_by_layer == NULL) {return ENOMEM;}
 
+    const unsigned int neurons_start_idx = MINIMUM_PARAMS - VETORIAL_PARAMS;
+    const unsigned int activations_start_idx = neurons_start_idx + parameters->num_layers;
+
     for(unsigned int i = 0; i < parameters->num_layers; ++i) {
-        parameters->neurons_by_layer[i] = (unsigned int) atoi(argv[(MINIMUM_PARAMS - 2) + parameters->num_layers * 0 + i]);
+        parameters->neurons_by_layer[i] = (unsigned int) atoi(argv[neurons_start_idx + i]);
     }
 
     for(unsigned int i = 0; i < parameters->num_layers; ++i)
     {
-        error_code = select_activation_function(atoi(argv[(MINIMUM_PARAMS - 2) + parameters->num_layers * 1 + i]), &(parameters->activation_by_layer[i]));
+        error_code = select_activation_function(atoi(argv[activations_start_idx + i]), &(parameters->activation_by_layer[i]));
         if(error_code != 0) {return error_code;}
     }
     return 0;
