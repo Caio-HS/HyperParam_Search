@@ -10,7 +10,7 @@ int train_network(struct fann * restrict const ann, const struct fann_train_data
 {
     clock_t inicio = clock();
 
-    fann_train_on_data(ann, (const struct fann_train_data *)data, NO_REPORTS, TARGET_ERROR);
+    fann_train_on_data(ann, (const struct fann_train_data *)data, MAX_EPOCHS, NO_REPORTS, TARGET_ERROR);
 
     clock_t fim = clock();
 
