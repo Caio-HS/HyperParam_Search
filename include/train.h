@@ -20,6 +20,6 @@ struct results
 
 typedef struct results RESULTS;
 
-int train_network(struct fann * restrict const ann, const struct fann_train_data * restrict const data, RESULTS * restrict const results);
+int train_network(struct fann * restrict const ann, struct fann_train_data * restrict const data, RESULTS * restrict const results);
 
 #endif
