@@ -15,7 +15,7 @@ struct results
     uint64_t test_time;
     float test_mse_error;
     uint64_t test_bit_error;
-    usigned float data_points_needed; //How much data entries are needed to reach the target error
+    uint64_t data_points_needed; //How much data entries are needed to reach the target error
 }
 
 typedef struct results RESULTS;
