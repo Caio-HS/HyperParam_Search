@@ -26,7 +26,7 @@ cleanup:
     if (params.neurons_by_layer) free(params.neurons_by_layer);
     if (params.activation_by_layer) free(params.activation_by_layer);
     if (ann) fann_destroy(ann);
-    if(data) fann_destroy_train(data);
+    if (data) fann_destroy_train(data);
 
     return error_code;
 }
