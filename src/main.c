@@ -25,7 +25,7 @@ int main(int argc, char * argv[])
 
     //O setup acaba aqui
 
-    error_code = train_network(ann, data);
+    error_code = train_network(ann, data, &output);
     if(error_code != 0) {goto cleanup;}
 
     //Essa secao deve virar uma funcao propria
