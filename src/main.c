@@ -3,6 +3,7 @@
 #include "get_params.h"
 #include "create_ann.h"
 #include "data.h"
+#include "train.h"
 
 int main(int argc, char * argv[])
 {
@@ -11,6 +12,7 @@ int main(int argc, char * argv[])
     struct fann * ann = NULL;
     struct fann_train_data * data = NULL;
     PARAMETERS params = { .neurons_by_layer = NULL, .activation_by_layer = NULL };
+    RESULTS output;
 
     error_code = get_parameter((unsigned int)argc, (const char * const *)argv, &params);
     if(error_code != 0) {goto cleanup;}
@@ -23,7 +25,8 @@ int main(int argc, char * argv[])
 
     //O setup acaba aqui
 
-    
+    error_code = train_network(ann, data);
+    if(error_code != 0) {goto cleanup;}
 
     //Essa secao deve virar uma funcao propria
 cleanup:
