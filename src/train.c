@@ -6,11 +6,11 @@
 
 #define NO_REPORTS 0
 
-int train_network(struct fann * restrict const ann, const struct fann_train_data * restrict const data, RESULTS * restrict const results)
+int train_network(struct fann * restrict const ann, struct fann_train_data * restrict const data, RESULTS * restrict const results)
 {
     clock_t inicio = clock();
 
-    fann_train_on_data(ann, (const struct fann_train_data *)data, MAX_EPOCHS, NO_REPORTS, TARGET_ERROR);
+    fann_train_on_data(ann, data, MAX_EPOCHS, NO_REPORTS, TARGET_ERROR);
 
     clock_t fim = clock();
 
