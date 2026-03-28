@@ -14,7 +14,7 @@ int train_network(struct fann * restrict const ann, struct fann_train_data * res
 
     clock_t fim = clock();
 
-    results->train_time = (uint64_t)(inicio - fim);
+    results->train_time = (uint64_t)(fim - inicio);
     
     return 0;
 }
