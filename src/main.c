@@ -21,6 +21,10 @@ int main(int argc, char * argv[])
     error_code = get_train_data(&data, DATA_FILENAME);
     if(error_code != 0) {goto cleanup;}
 
+    //O setup acaba aqui
+
+    
+
     //Essa secao deve virar uma funcao propria
 cleanup:
     if (params.neurons_by_layer) free(params.neurons_by_layer);
