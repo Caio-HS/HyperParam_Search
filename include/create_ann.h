@@ -5,7 +5,7 @@
 
 #define MIN_WEIGHT -0.2f
 #define MAX_WEIGHT 0.2f
-#define SPARSE_THERESHOLD 0.005F
+#define SPARSE_THERESHOLD 0.995F
 
 int create_configured_ann(struct fann ** restrict const ann, const PARAMETERS params);
 
