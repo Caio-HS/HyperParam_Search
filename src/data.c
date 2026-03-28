@@ -3,7 +3,7 @@
 
 #include "data.h"
 
-int get_train_data(struct fann_train_data * restrict const * restrict const data, const char * restrict const filename)
+int get_train_data(struct fann_train_data ** restrict const data, const char * restrict const filename)
 {
     if(data == NULL) { return EINVAL; }
 
