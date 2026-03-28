@@ -1,5 +1,5 @@
-#ifndef TRAIN_DATA
-#define TRAIN_DATA
+#ifndef DATA
+#define DATA
 
 #include <fann.h>
 
