@@ -10,10 +10,10 @@ struct results
 {
     uint64_t total_parameters;
     uint64_t train_time;
-    unsigned float train_mse_error;
+    float train_mse_error;
     uint64_t train_bit_error;
     uint64_t test_time;
-    unsigned float test_mse_error;
+    float test_mse_error;
     uint64_t test_bit_error;
     usigned float data_points_needed; //How much data entries are needed to reach the target error
 }
