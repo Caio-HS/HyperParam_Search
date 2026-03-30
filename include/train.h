@@ -3,22 +3,10 @@
 
 #include <stdint.h>
 
+#include "results.h"
+
 #define TARGET_ERROR 0.005f
 #define MAX_EPOCHS 200
-
-struct results
-{
-    uint64_t total_parameters;
-    uint64_t train_time;
-    float train_mse_error;
-    uint64_t train_bit_error;
-    uint64_t test_time;
-    float test_mse_error;
-    uint64_t test_bit_error;
-    uint64_t data_points_needed; //How much data entries are needed to reach the target error
-};
-
-typedef struct results RESULTS;
 
 int train_network(struct fann * restrict const ann, struct fann_train_data * restrict const data, RESULTS * restrict const results);
 
