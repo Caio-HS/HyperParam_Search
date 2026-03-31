@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 #define TARGET_ERROR 0.005f
-#define MAX_EPOCHS 200
+#define MAX_EPOCHS 50000
 
 struct results
 {
