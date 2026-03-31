@@ -16,6 +16,13 @@ struct results
     uint64_t data_points_needed; //How much data entries are needed to reach the target error
 };
 
+struct context
+{
+    uint64_t last_epoch;
+};
+
+typedef struct context CONTEXT;
+
 typedef struct results RESULTS;
 
 int instrument_ann(struct fann * restrict const ann);
