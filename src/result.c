@@ -23,12 +23,12 @@ int set_train_results(struct fann * restrict const ann, uint64_t train_time, RES
 
 
     results->total_parameters = fann_get_total_connections(ann);
-    results->train_time = train_time;
+    results->train_time = time;
     results->train_mse_error = fann_get_MSE(ann);
     results->train_bit_error = fann_get_bit_fail(ann);
 
     const CONTEXT * restrict const context = (const CONTEXT *) fann_get_user_data(ann);
-    results->data_points_needed = context->last_epochs;
+    results->data_points_needed = context->last_epoch;
     return 0;
 }
 
@@ -38,7 +38,7 @@ int set_test_results(struct fann * restrict const ann, uint64_t time, RESULTS * 
     if(ann == NULL) {return EINVAL;}
     if(results == NULL) {return EINVAL;}
 
-    results->test_time = train_time;
+    results->test_time = time;
     results->test_mse_error = fann_get_MSE(ann);
     results->test_bit_error = fann_get_bit_fail(ann);
 
