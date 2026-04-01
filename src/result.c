@@ -16,7 +16,7 @@ int instrument_ann(struct fann * restrict const ann, CONTEXT ** restrict const c
     return 0;
 }
 
-int set_train_results(struct fann * restrict const ann, uint64_t train_time, RESULTS * restrict const results)
+int set_train_results(struct fann * restrict const ann, uint64_t time, RESULTS * restrict const results)
 {
     if(ann == NULL) {return EINVAL;}
     if(results == NULL) {return EINVAL;}
