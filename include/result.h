@@ -27,7 +27,7 @@ typedef struct results RESULTS;
 
 int instrument_ann(struct fann * restrict const ann, CONTEXT ** restrict const context);
 int set_train_results(struct fann * restrict const ann, uint64_t time, RESULTS * restrict const results);
-int set_test_results(struct fann * restrict const ann, uint64_t time, RESULTS * restrict const results)
+int set_test_results(struct fann * restrict const ann, uint64_t time, RESULTS * restrict const results);
 int send_results(RESULTS * restrict const results, int * restrict const result_vector);
 
 #endif
