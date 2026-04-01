@@ -1,5 +1,5 @@
-#ifndef RESULTS
-#define RESULTS
+#ifndef RESULT
+#define RESULT
 
 #include <stdint.h>
 #include <fann.h>
@@ -29,4 +29,4 @@ int instrument_ann(struct fann * restrict const ann, CONTEXT ** restrict const c
 int set_results(struct fann * restrict const ann, const CONTEXT * restrict const context, uint64_t train_time, RESULTS * restrict const results);
 int send_results(RESULTS * restrict const results, int * restrict const result_vector);
 
-#endif RESULTS
+#endif

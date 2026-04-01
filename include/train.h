@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#include "results.h"
+#include "result.h"
 
 #define TARGET_ERROR 0.005f
 #define MAX_EPOCHS 200

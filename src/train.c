@@ -3,6 +3,7 @@
 #include <stdint.h>
 
 #include "train.h"
+#include "result.h"
 
 #define NO_REPORTS 0
 

@@ -4,6 +4,7 @@
 #include "create_ann.h"
 #include "data.h"
 #include "train.h"
+#include "result.h"
 
 int main(int argc, char * argv[])
 {
@@ -16,8 +17,8 @@ int main(int argc, char * argv[])
 
     error_code = get_parameter((unsigned int)argc, (const char * const *)argv, &params);
     if(error_code != 0) {goto cleanup;}
-    
-    error_code = create_configured_ann(&ann, params); 
+
+    error_code = create_configured_ann(&ann, params);
     if(error_code != 0) {goto cleanup;}
 
     error_code = get_train_data(&data, DATA_FILENAME);
