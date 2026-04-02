@@ -24,7 +24,7 @@ int get_train_data(struct fann_train_data ** restrict const data, const char * r
     if(error_code != 0)
     {
         fann_destroy_train(*data);
-        *data == NULL;
+        *data = NULL;
         return error_code;
     }
     
