@@ -35,7 +35,7 @@ DEBUG_FLAGS = -O0 -Wall -Wextra -g -Wformat=2 -Wconversion -Wcast-qual \
               -Wanalyzer-unsafe-call-within-signal-handler -Wanalyzer-tainted-array-index \
               -Wanalyzer-use-of-pointer-in-stale-stack-frame -Wanalyzer-write-to-const \
               -Wanalyzer-write-to-string-literal -Wvector-operation-performance \
-              -Wno-aggregate-return -Wanalyzer-too-complex
+              -Wno-aggregate-return -Wanalyzer-too-complex --param=analyzer-max-enodes-per-program-point=260000
 
 # Flags de Execução (Release)
 # -O3: Otimização agressiva
