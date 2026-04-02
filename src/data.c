@@ -50,7 +50,7 @@ int get_test_data(struct fann_train_data ** restrict const data, const char * re
     if(error_code != 0)
     {
         fann_destroy_train(*data);
-        *data == NULL;
+        *data = NULL;
         return error_code;
     }
     
