@@ -12,7 +12,9 @@ int get_train_data(struct fann_train_data ** restrict const data, const char * r
     if(data == NULL) { return EINVAL; }
 
     int error_code = 0;
-    
+
+    error_code = get_data_subset(data, DATA_USED_IN_TRAIN, false, DATA_FILENAME);
+    if(error_code != 0) { return error_code; }
 
     error_code = prepare_data(*data);
     if(error_code != 0) { return error_code; }
@@ -25,6 +27,9 @@ int get_test_data(struct fann_train_data ** restrict const data, const char * re
     if(data == NULL) { return EINVAL; }
 
     int error_code = 0;
+
+    error_code = get_data_subset(data, 1.0 - DATA_USED_IN_TRAIN, true, DATA_FILENAME);
+    if(error_code != 0) { return error_code; }
 
     error_code = prepare_data(*data);
     if(error_code != 0) { return error_code; }
