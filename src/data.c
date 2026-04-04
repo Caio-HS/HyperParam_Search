@@ -5,7 +5,7 @@
 #include "data.h"
 
 static int prepare_data(struct fann_train_data * restrict const data);
-static int get_data_subset(struct fann_train_data ** restrict const output, const float percentage_of_dataset_used, const char * restrict const filename);
+static int get_data_subset(struct fann_train_data ** restrict const output, const float percentage_of_dataset_used, const bool isTest, const char * restrict const filename);
 
 int get_train_data(struct fann_train_data ** restrict const data, const char * restrict const filename)
 {
@@ -64,15 +64,15 @@ static int get_data_subset(struct fann_train_data ** restrict const output, cons
 
     if(isTest)
     {
-        init = (unsigned int) ( (float) data_size ) * DATA_USED_IN_TRAIN + 1;
+        init = mean + 1;
         end = data_size - 1;
     } else {
         init = 0;
-        end = (unsigned int) ( (float) data_size ) * DATA_USED_IN_TRAIN;
+        end = mean;
     }
     
-    *output = fann_subset_train_data(new_data, init, end);
-    fann_destroy_train(new_data);
+    *output = fann_subset_train_data(input, init, end);
+    fann_destroy_train(input);
     new_data = NULL;
 
     return 0;
