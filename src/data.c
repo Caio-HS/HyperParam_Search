@@ -13,7 +13,7 @@ int get_train_data(struct fann_train_data ** restrict const data, const char * r
 
     int error_code = 0;
 
-    error_code = get_data_subset(data, DATA_USED_IN_TRAIN, false, DATA_FILENAME);
+    error_code = get_data_subset(data, DATA_USED_IN_TRAIN, false, filename);
     if(error_code != 0) { return error_code; }
 
     error_code = prepare_data(*data);
@@ -28,7 +28,7 @@ int get_test_data(struct fann_train_data ** restrict const data, const char * re
 
     int error_code = 0;
 
-    error_code = get_data_subset(data, 1.0 - DATA_USED_IN_TRAIN, true, DATA_FILENAME);
+    error_code = get_data_subset(data, 1.0 - DATA_USED_IN_TRAIN, true, filename);
     if(error_code != 0) { return error_code; }
 
     error_code = prepare_data(*data);
@@ -54,7 +54,7 @@ static int get_data_subset(struct fann_train_data ** restrict const output, cons
     if(output == NULL) { return EINVAL; }
     
     struct fann_train_data * input = fann_read_train_from_file(filename);
-    if(*input == NULL) {return ENOMEM;}
+    if(input == NULL) {return ENOMEM;}
     
     const unsigned int data_size = fann_length_train_data(input);
 
@@ -73,7 +73,7 @@ static int get_data_subset(struct fann_train_data ** restrict const output, cons
     
     *output = fann_subset_train_data(input, init, end);
     fann_destroy_train(input);
-    new_data = NULL;
+    input = NULL;
 
     return 0;
 }
