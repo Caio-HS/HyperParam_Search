@@ -4,7 +4,7 @@
 #include <fann.h>
 
 #define DATA_FILENAME "./data/energy_efficiency.data"
-#define DATA_USED_IN_TRAIN 0.750f
+#define DATA_USED_IN_TRAIN 0.750
 #define MIN_SCALE -1.0f
 #define MAX_SCALE 1.0f
 
