@@ -11,7 +11,7 @@ int instrument_ann(struct fann * restrict const ann)
 {
     if(ann == NULL) {return EINVAL;}
 
-    CONTEXT * restrict const context = (CONTEXT *) malloc(sizeof(CONTEXT));
+    CONTEXT * restrict context = (CONTEXT *) malloc(sizeof(CONTEXT));
     if(*context == NULL) {return ENOMEM;}
 
     (*context)->last_epoch = 0;
