@@ -28,7 +28,6 @@ int set_train_results(struct fann * restrict const ann, uint64_t time, RESULTS *
     if(ann == NULL) {return EINVAL;}
     if(results == NULL) {return EINVAL;}
 
-
     results->total_parameters = (uint64_t) fann_get_total_connections(ann);
     results->train_time = time;
     results->train_mse_error = fann_get_MSE(ann);
@@ -69,7 +68,7 @@ static int FANN_API callback_function(struct fann *ann, struct fann_train_data *
     if (max_epochs < epochs) {return -1;}
     if (epochs_between_reports == 0) {return -1;}
     if (desired_error < 0) {return -1;}
-    
+
     CONTEXT * const restrict context = fann_get_user_data(ann);
     context->last_epoch += 1;
     return 0;
