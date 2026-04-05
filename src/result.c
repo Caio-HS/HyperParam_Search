@@ -5,6 +5,8 @@
 
 #include "result.h"
 
+static int FANN_API callback_function(struct fann *ann, struct fann_train_data *train, unsigned int max_epochs, unsigned int epochs_between_reports, float desired_error, unsigned int epochs);
+
 int instrument_ann(struct fann * restrict const ann, CONTEXT ** restrict const context)
 {
     if(ann == NULL) {return EINVAL;}
@@ -12,7 +14,11 @@ int instrument_ann(struct fann * restrict const ann, CONTEXT ** restrict const c
     *context = (CONTEXT *) malloc(sizeof(CONTEXT));
     if(*context == NULL) {return ENOMEM;}
 
+    context->last_epoch = 0;
+    
     fann_set_user_data(ann, *context);
+
+    fann_set_callback(ann, callback_function);
 
     return 0;
 }
@@ -54,3 +60,13 @@ int send_results(RESULTS * restrict const results, RESULTS * restrict const outp
     
     return 0;
 }
+
+
+static int FANN_API callback_function(struct fann *ann, struct fann_train_data *train, unsigned int max_epochs, unsigned int epochs_between_reports, float desired_error, unsigned int epochs)
+{
+    CONTEXT * const restrict context = fann_get_user_data(ann);
+    context->last_epoch += 1;
+    return 0;
+}
+
+
