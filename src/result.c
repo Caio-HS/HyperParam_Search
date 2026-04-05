@@ -67,7 +67,7 @@ static int FANN_API callback_function(struct fann *ann, struct fann_train_data *
     if (ann == NULL) {return -1;}
     if (train == NULL) {return -1;}
     if (max_epochs < epochs) {return -1;}
-    if (unsigned_between_reports == 0) {return -1;}
+    if (epochs_between_reports == 0) {return -1;}
     if (desired_error == 0) {return -1;}
     
     CONTEXT * const restrict context = fann_get_user_data(ann);
