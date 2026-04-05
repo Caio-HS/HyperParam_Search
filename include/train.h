@@ -7,6 +7,7 @@
 
 #define TARGET_ERROR 0.005f
 #define MAX_EPOCHS 200
+#define REPORT_RATE 1
 
 int train_network(struct fann * restrict const ann, struct fann_train_data * restrict const data);
 
