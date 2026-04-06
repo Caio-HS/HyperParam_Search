@@ -7,11 +7,11 @@
 
 static int FANN_API callback_function(struct fann *ann, struct fann_train_data *train, unsigned int max_epochs, unsigned int epochs_between_reports, float desired_error, unsigned int epochs);
 
-int instrument_ann(struct fann * restrict const ann, CONTEXT ** restrict const context)
+int instrument_ann(struct fann * restrict const ann)
 {
     if(ann == NULL) {return EINVAL;}
 
-    *context = (CONTEXT *) malloc(sizeof(CONTEXT));
+    CONTEXT * restrict context = (CONTEXT *) malloc(sizeof(CONTEXT));
     if(*context == NULL) {return ENOMEM;}
 
     (*context)->last_epoch = 0;
