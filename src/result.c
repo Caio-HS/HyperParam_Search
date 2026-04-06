@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #include "result.h"
+#include "get_params.h"
 
 static int FANN_API callback_function(struct fann *ann, struct fann_train_data *train, unsigned int max_epochs, unsigned int epochs_between_reports, float desired_error, unsigned int epochs);
 
@@ -51,11 +52,11 @@ int set_test_results(struct fann * restrict const ann, uint64_t time, RESULTS * 
     return 0;
 }
 
-int send_results(RESULTS * restrict const results, RESULTS * restrict const output)
+int send_results(const RESULTS * restrict const results, const PARAMETERS * const restrict params, RESULTS * restrict const output)
 {
     if(results == NULL) {return EINVAL;}
     if(output == NULL) {return EINVAL;}
-
+    if(params == NULL) {return EINVAL;}
     
     return 0;
 }

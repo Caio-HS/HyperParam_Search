@@ -22,7 +22,7 @@ int main(int argc, char * argv[])
     error_code = create_configured_ann(&ann, params);
     if(error_code != 0) {goto cleanup;}
 
-    error_code = instrument_ann(ann)
+    error_code = instrument_ann(ann);
     if(error_code != 0) {goto cleanup;}
     
     //O Setup acaba aqui
