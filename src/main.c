@@ -53,7 +53,7 @@ int main(int argc, char * argv[])
 
     init = clock();
 
-    error_code = test_network(ann, data, &output);
+    error_code = fann_test_data(ann, data);
     if(error_code != 0) {goto cleanup;}
 
     end = clock();
