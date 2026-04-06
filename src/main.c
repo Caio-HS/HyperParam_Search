@@ -44,6 +44,8 @@ int main(int argc, char * argv[])
 
     error_code = set_train_results(struct fann * restrict const ann, time, &results);
     if(error_code != 0) {goto cleanup;}
+    fann_destroy_train(data);
+    data = NULL;
 
     
     error_code = get_train_data(&data, DATA_FILENAME);
