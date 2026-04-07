@@ -1,5 +1,6 @@
 #include <time.h>
 #include <stdlib.h>
+#include <stdlib.h>
 
 #include "get_params.h"
 #include "create_ann.h"
@@ -43,27 +44,26 @@ int main(int argc, char * argv[])
     time = end - init;
     init = end = 0;
 
-    error_code = set_train_results(ann, time, &results);
+    error_code = set_train_results(ann, (uint64_t) time, &output);
     if(error_code != 0) {goto cleanup;}
     fann_destroy_train(data);
     data = NULL;
     time = 0;
 
     
-    error_code = get_train_data(&data, DATA_FILENAME);
+    error_code = get_test_data(&data, DATA_FILENAME);
     if(error_code != 0) {goto cleanup;}
 
     init = clock();
 
-    error_code = fann_test_data(ann, data);
-    if(error_code != 0) {goto cleanup;}
+    fann_test_data(ann, data);
 
     end = clock();
 
     time = end - init;
     init = end = 0;
 
-    error_code = set_test_results(ann, time, &output);
+    error_code = set_test_results(ann, (uint64_t) time, &output);
     if(error_code != 0) {goto cleanup;}
 
     //Essa secao deve virar uma funcao propria
