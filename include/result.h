@@ -29,3 +29,5 @@ int instrument_ann(struct fann * restrict const ann);
 int set_train_results(struct fann * restrict const ann, uint64_t time, RESULTS * restrict const results);
 int set_test_results(struct fann * restrict const ann, uint64_t time, RESULTS * restrict const results);
 int send_results(const RESULTS * restrict const results, const PARAMETERS * const restrict params, RESULTS * restrict const output);
+
+#endif
