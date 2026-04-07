@@ -15,6 +15,9 @@ int main(int argc, char * argv[])
     struct fann_train_data * data = NULL;
     PARAMETERS params = { .neurons_by_layer = NULL, .activation_by_layer = NULL };
     RESULTS output;
+    clock_t init = 0;
+    clock_t end = 0;
+    clock_t time = 0;
 
     error_code = get_parameter((unsigned int)argc, (const char * const *)argv, &params);
     if(error_code != 0) {goto cleanup;}
@@ -26,26 +29,25 @@ int main(int argc, char * argv[])
     if(error_code != 0) {goto cleanup;}
     
     //O Setup acaba aqui
-    clock_t init = 0;
-    clock_t end = 0;
-    clock_t time = 0;
 
     error_code = get_train_data(&data, DATA_FILENAME);
     if(error_code != 0) {goto cleanup;}
 
     init = clock();
 
-    error_code = train_network(ann, data, &output);
+    error_code = train_network(ann, data);
     if(error_code != 0) {goto cleanup;}
 
     end = clock();
 
-    time = end - init;    
+    time = end - init;
+    init = end = 0;
 
-    error_code = set_train_results(struct fann * restrict const ann, time, &results);
+    error_code = set_train_results(ann, time, &results);
     if(error_code != 0) {goto cleanup;}
     fann_destroy_train(data);
     data = NULL;
+    time = 0;
 
     
     error_code = get_train_data(&data, DATA_FILENAME);
@@ -58,9 +60,10 @@ int main(int argc, char * argv[])
 
     end = clock();
 
-    time = end - init;    
+    time = end - init;
+    init = end = 0;
 
-    error_code = set_test_results(struct fann * restrict const ann, time, &output);
+    error_code = set_test_results(ann, time, &output);
     if(error_code != 0) {goto cleanup;}
 
     //Essa secao deve virar uma funcao propria
