@@ -1,6 +1,6 @@
 #include <time.h>
 #include <stdlib.h>
-#include <stdlib.h>
+#include <fann.h>
 
 #include "get_params.h"
 #include "create_ann.h"
@@ -70,7 +70,11 @@ int main(int argc, char * argv[])
 cleanup:
     if (params.neurons_by_layer) free(params.neurons_by_layer);
     if (params.activation_by_layer) free(params.activation_by_layer);
-    if (ann) fann_destroy(ann);
+    if (ann) {
+        void * context = fann_get_user_data(ann);
+        if(context != NULL) { free(context); }
+        fann_destroy(ann);
+    }
     if (data) fann_destroy_train(data);
 
     return error_code;
