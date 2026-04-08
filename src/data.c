@@ -52,26 +52,37 @@ static int prepare_data(struct fann_train_data * restrict const data)
 static int get_data_subset(struct fann_train_data ** restrict const output, const float percentage_of_dataset_used, const bool isTest, const char * restrict const filename)
 {
     if(output == NULL) { return EINVAL; }
+    if(filename == NULL) { return EINVAL; }
     
     struct fann_train_data * input = fann_read_train_from_file(filename);
     if(input == NULL) {return ENOMEM;}
     
     const unsigned int data_size = fann_length_train_data(input);
+    if(data_size == 0u) 
+    {
+        fann_destroy_train(input);
+        return EINVAL;
+    }
 
-    unsigned int init;
-    unsigned int end;
+    unsigned int init = 0u;
+    unsigned int end = 0u;
     unsigned int mean = (unsigned int) ( ( (float) data_size ) * percentage_of_dataset_used );
 
     if(isTest)
     {
-        init = mean + 1;
-        end = data_size - 1;
+        init = mean + 1u;
+        end = data_size - 1u;
     } else {
-        init = 0;
+        init = 0u;
         end = mean;
     }
     
     *output = fann_subset_train_data(input, init, end);
+    if(*output == NULL) 
+    {
+        fann_destroy_train(input);
+        return ENOMEM;
+    }
     fann_destroy_train(input);
     input = NULL;
 
