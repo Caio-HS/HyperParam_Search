@@ -13,11 +13,11 @@ int instrument_ann(struct fann * restrict const ann)
     if(ann == NULL) {return EINVAL;}
 
     CONTEXT * restrict context = (CONTEXT *) malloc(sizeof(CONTEXT));
-    if(*context == NULL) {return ENOMEM;}
+    if(context == NULL) {return ENOMEM;}
 
-    (*context)->last_epoch = 0;
+    context->last_epoch = 0;
     
-    fann_set_user_data(ann, *context);
+    fann_set_user_data(ann, context);
 
     fann_set_callback(ann, callback_function);
 
