@@ -75,7 +75,7 @@ static int FANN_API callback_function(struct fann *ann, struct fann_train_data *
     CONTEXT * const restrict context = fann_get_user_data(ann);
     if(context == NULL) 
     {
-        fprintf(stderr, "Erro: ANN without context structure")
+        fprintf(stderr, "Erro: ANN without context structure");
         return -1;
     }
     
