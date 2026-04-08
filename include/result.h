@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <fann.h>
 
+#include "get_params.h"
+
 struct results
 {
     uint64_t total_parameters;
