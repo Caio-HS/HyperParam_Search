@@ -41,7 +41,12 @@ int get_parameter(const unsigned int argc, const char * restrict const * restric
     parameters->activation_by_layer = malloc(sizeof(ACTIV_FUNC) * parameters->num_layers);
     if(parameters->activation_by_layer == NULL) {return ENOMEM;}
     parameters->neurons_by_layer = malloc(sizeof(unsigned int) * parameters->num_layers);
-    if(parameters->neurons_by_layer == NULL) {return ENOMEM;}
+    if(parameters->neurons_by_layer == NULL) 
+    {
+        free(parameters->activation_by_layer);
+        parameters->activation_by_layer = NULL;
+        return ENOMEM;
+    }
 
     const unsigned int neurons_start_idx = MINIMUM_PARAMS - VETORIAL_PARAMS;
     const unsigned int activations_start_idx = neurons_start_idx + parameters->num_layers;
