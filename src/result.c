@@ -35,6 +35,7 @@ int set_train_results(struct fann * restrict const ann, uint64_t time, RESULTS *
     results->train_bit_error = (uint64_t) fann_get_bit_fail(ann);
 
     const CONTEXT * restrict const context = (const CONTEXT *) fann_get_user_data(ann);
+    if(context == NULL) {return EINVAL;}
     results->data_points_needed = context->last_epoch;
     return 0;
 }
@@ -71,8 +72,8 @@ static int FANN_API callback_function(struct fann *ann, struct fann_train_data *
     if (desired_error < 0) {return -1;}
 
     CONTEXT * const restrict context = fann_get_user_data(ann);
+    if(context == NULL) {return -1;}
     context->last_epoch += 1;
     return 0;
 }
-
 
