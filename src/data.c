@@ -78,7 +78,7 @@ static int get_data_subset(struct fann_train_data ** restrict const output, cons
         end = mean;
     }
 
-    lenght = init - end;
+    lenght = end - init;
     *output = fann_subset_train_data(input, init, lenght);
     if(*output == NULL) 
     {
