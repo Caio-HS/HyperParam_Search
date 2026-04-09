@@ -66,6 +66,10 @@ int main(int argc, char * argv[])
     error_code = set_test_results(ann, (uint64_t) time, &output);
     if(error_code != 0) {goto cleanup;}
 
+    //Uso temporario para testes
+    error_code = send_results(&output, &params, NULL);
+    if(error_code != 0) {goto cleanup;}
+
     //Essa secao deve virar uma funcao propria
 cleanup:
     if (params.neurons_by_layer) free(params.neurons_by_layer);
