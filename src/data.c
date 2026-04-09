@@ -66,6 +66,7 @@ static int get_data_subset(struct fann_train_data ** restrict const output, cons
 
     unsigned int init = 0u;
     unsigned int end = 0u;
+    unsigned int lenght = 0u;
     unsigned int mean = (unsigned int) ( ( (float) data_size ) * percentage_of_dataset_used );
 
     if(isTest)
@@ -76,8 +77,9 @@ static int get_data_subset(struct fann_train_data ** restrict const output, cons
         init = 0u;
         end = mean;
     }
-    
-    *output = fann_subset_train_data(input, init, end);
+
+    lenght = init - end;
+    *output = fann_subset_train_data(input, init, lenght);
     if(*output == NULL) 
     {
         fann_destroy_train(input);
