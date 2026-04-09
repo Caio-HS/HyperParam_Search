@@ -12,6 +12,9 @@
 
 static int FANN_API callback_function(struct fann *ann, struct fann_train_data *train, unsigned int max_epochs, unsigned int epochs_between_reports, float desired_error, unsigned int epochs);
 
+//função temporaria para testes
+static void print_results(const RESULTS * restrict const results);
+
 int instrument_ann(struct fann * restrict const ann)
 {
     if(ann == NULL) {return EINVAL;}
