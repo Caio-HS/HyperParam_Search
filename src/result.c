@@ -114,13 +114,13 @@ void print_results(const RESULTS * restrict const results)
     // Métricas de Treino
     printf("\n--- Treinamento ---\n");
     printf("Tempo de Treino:     %" PRIu64 " clocks\n", results->train_time);
-    printf("Erro MSE (Treino):   %f\n", results->train_mse_error);
+    printf("Erro MSE (Treino):   %f\n", (double) results->train_mse_error);
     printf("Erro de Bits:        %" PRIu64 "\n", results->train_bit_error);
 
     // Métricas de Teste
     printf("\n--- Teste ---\n");
     printf("Tempo de Teste:      %" PRIu64 " clocks\n", results->test_time);
-    printf("Erro MSE (Teste):    %f\n", results->test_mse_error);
+    printf("Erro MSE (Teste):    %f\n", (double) results->test_mse_error);
     printf("Erro de Bits:        %" PRIu64 "\n", results->test_bit_error);
     
     printf("========================================\n\n");
