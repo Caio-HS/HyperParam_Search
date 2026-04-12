@@ -19,3 +19,7 @@
 !data/
 !data/*
 !data/**
+
+!database/
+!database/*
+!database/**
