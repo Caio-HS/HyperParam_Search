@@ -70,7 +70,7 @@ int main(int argc, char * argv[])
     if(error_code != 0) {goto cleanup;}
 
     //Uso temporario para testes
-    error_code = send_results(&output, &params, NULL);
+    error_code = send_results(&output, &params);
     if(error_code != 0) {goto cleanup;}
 
     //Essa secao deve virar uma funcao propria
