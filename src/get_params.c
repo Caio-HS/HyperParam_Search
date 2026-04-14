@@ -38,6 +38,8 @@ int get_parameter(const unsigned int argc, const char * restrict const * restric
     error_code = select_error_function(atoi(argv[5]), &parameters->error_function);
     if(error_code != 0) {return error_code;}
 
+    parameters->random_seed = (unsigned int) atoi(argv[6]);
+
     parameters->activation_by_layer = malloc(sizeof(ACTIV_FUNC) * parameters->num_layers);
     if(parameters->activation_by_layer == NULL) {return ENOMEM;}
     parameters->neurons_by_layer = malloc(sizeof(unsigned int) * parameters->num_layers);
