@@ -7,7 +7,7 @@
 #define INCORRECT_PARAMS_COUNT 1u
 #define INVALID_PARAM 2u
 #define VETORIAL_PARAMS 2u
-#define MINIMUM_PARAMS 8
+#define MINIMUM_PARAMS 9
 
 typedef enum fann_errorfunc_enum ERROR_FUNC;
 typedef enum fann_train_enum TRAIN_ALGO;
@@ -22,6 +22,7 @@ struct network_parameters
     NET_TYPE network_type;
     TRAIN_ALGO train_algorithm;
     ERROR_FUNC error_function;
+	unsigned int random_seed;
 
 	unsigned int * restrict neurons_by_layer;
     ACTIV_FUNC * restrict activation_by_layer;
