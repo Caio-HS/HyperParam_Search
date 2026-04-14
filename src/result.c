@@ -1,4 +1,3 @@
-#include <fann.h>
 #include <time.h>
 #include <errno.h>
 #include <stdint.h>
@@ -6,6 +5,9 @@
 //Adição temporaria para testes
 #include <inttypes.h>
 #include <stdio.h>
+
+#include <xxhash.h>
+#include <fann.h>
 
 #include "result.h"
 #include "get_params.h"
@@ -60,12 +62,9 @@ int set_test_results(struct fann * restrict const ann, uint64_t time, RESULTS * 
     return 0;
 }
 
-int send_results(const RESULTS * restrict const results, const PARAMETERS * const restrict params, RESULTS * restrict const output)
+int send_results(const RESULTS * restrict const results, const PARAMETERS * const restrict params)
 {
     if(results == NULL) {return EINVAL;}
-    /* Modificação temporaria para testes
-    if(output == NULL) {return EINVAL;}
-    */
     if(params == NULL) {return EINVAL;}
 
     //função temporaria para testes
@@ -91,6 +90,16 @@ static int FANN_API callback_function(struct fann *ann, struct fann_train_data *
     }
     
     context->last_epoch += 1;
+    return 0;
+}
+
+int set_parameters_hash(const PARAMETERS * restrict const params, RESULTS * restrict const results)
+{
+    if(params == NULL) { return EINVAL; }
+    if(results == NULL) { return EINVAL; }
+
+    results->parameters_hash = XXH64(params, sizeof(PARAMETERS), HASHS_SEED);
+    
     return 0;
 }
 
