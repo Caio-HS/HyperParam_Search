@@ -6,6 +6,8 @@
 
 #include "get_params.h"
 
+#define HASHS_SEED 0
+
 struct results
 {
     uint64_t total_parameters;
