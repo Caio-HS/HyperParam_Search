@@ -83,7 +83,7 @@ static int configure_ann(struct fann * restrict const ann, const PARAMETERS para
 
     int error_code = 0;
 
-    srand(params->random_seed);
+    srand(params.random_seed);
     
     fann_randomize_weights(ann, MIN_WEIGHT, MAX_WEIGHT);
 
