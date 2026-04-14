@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdbool.h>
 #include <errno.h>
 #include <fann.h>
@@ -81,6 +82,9 @@ static int configure_ann(struct fann * restrict const ann, const PARAMETERS para
     if(ann == NULL){return EINVAL;}
 
     int error_code = 0;
+
+    srand(params->random_seed);
+    
     fann_randomize_weights(ann, MIN_WEIGHT, MAX_WEIGHT);
 
     fann_set_training_algorithm(ann, params.train_algorithm);
