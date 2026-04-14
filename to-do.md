@@ -1,6 +1,6 @@
 ## LISTA DOS PROXIMOS PASSOS
 
-1. [ ]  Implementar a seed aleatória como um dos parametros de entrada 
+1. [x]  Implementar a seed aleatória como um dos parametros de entrada 
 2. [ ]  Implementar o tipo de inicialização como um dos parametros de entrada
 3. [ ]  Implementar o hash dos parametros de entrada na estutura dos resultados
 4. [ ]  Implementar uma suite de testes
