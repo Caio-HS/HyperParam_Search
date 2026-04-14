@@ -44,7 +44,7 @@ DEBUG_FLAGS = -O0 -Wall -Wextra -g -Wformat=2 -Wconversion -Wcast-qual \
 RELEASE_FLAGS = -O3 -march=native -flto -DNDEBUG -Wall
 
 # Flags do Linker
-LDFLAGS = -lfann -lm
+LDFLAGS = -lfann -lm -lxxhash
 
 # --- Lógica de Seleção de Modo ---
 
