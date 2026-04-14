@@ -28,6 +28,9 @@ int main(int argc, char * argv[])
 
     error_code = instrument_ann(ann);
     if(error_code != 0) {goto cleanup;}
+
+    error_code = set_parameters_hash(&params, &output);
+    if(error_code != 0) {goto cleanup;}
     
     //O Setup acaba aqui
 
