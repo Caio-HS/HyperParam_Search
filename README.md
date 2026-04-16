@@ -38,7 +38,42 @@ Para a arquitetura em camadas funcionar, é necessário que exista um "contrato"
 
 ### Orquestrador X Banco de dados
 
+A relação do orquestrador com o banco de dados é significativamente simples:
+1. Sempre use WAL (Write-Ahead Logging).
+2. Mantenha o tipo dos dados correto.
+3. Verifique se não houve retorno de erro (Escrita duplicada, tipos invalidos, valores absurdos ou campo nulo).
 
+O processo de escrita em linhas gerais é:
+1. Escreva uma linha na tabela de experimentos.
+2. Recupere a chave primaria dessa linha.
+3. Escreva (em Batch, para garantir atomicidade) os dados de todas as camadas na tabela de camadas.
+
+A tabela de experimentos (por coluna):
+1. num_layers: Dado do tipo inteiro, obrigatório (NOT NULL), parametro, com a verificação de que o valor deve ser maior ou igual a 2.
+2. density: Dado do tipo real (ponto flutuante), parametro, com a verificação de que o valor deve estar no intervalo entre 0 e 1, inclusive.
+3. train_algorithm: Dado do tipo inteiro, parametro, utilizado para identificar o algoritmo de treinamento.
+4. network_type: Dado do tipo inteiro, parametro, utilizado para definir o tipo de arquitetura da rede.
+5. error_function: Dado do tipo inteiro, parametro, que identifica a função de erro utilizada.
+6. seed: Dado do tipo inteiro, parametro, servindo como semente para processos aleatórios.
+7. parameter_hash: Dado do tipo inteiro, com restrição de unicidade (UNIQUE), impedindo duplicatas de hashes de parâmetros.
+8. total_parameters: Dado do tipo inteiro, resultado, com a verificação de que o valor deve ser estritamente maior que 0.
+9. train_time_nanoseconds: Dado do tipo inteiro, resultado, com a verificação de que o tempo decorrido deve ser maior que 0.
+10. train_mse_error: Dado do tipo real, resultado, com a verificação de que o erro quadrático médio de treino não pode ser negativo (>= 0).
+11. train_bit_error: Dado do tipo inteiro, resultado, com a verificação de que o erro de bit de treino não pode ser negativo (>= 0).
+12. test_time_nanoseconds: Dado do tipo inteiro, resultado, com a verificação de que o tempo de teste deve ser maior que 0.
+13. test_mse_error: Dado do tipo real, resultado, com a verificação de que o erro quadrático médio de teste não pode ser negativo (>= 0).
+14. test_bit_error: Dado do tipo inteiro, resultado, com a verificação de que o erro de bit de teste não pode ser negativo (>= 0).
+15. data_points_needed: Dado do tipo inteiro, resultado, com a verificação de que a quantidade de pontos de dados necessária deve ser maior que 0.
+
+A tabela de camadas (por coluna):
+1. experiment_id: Dado do tipo inteiro. Ele serve para ligar a camada ao seu experimento pai. Possui Exclusão em Cascata, ou seja, se você apagar o experimento, todas as camadas ligadas a esse ID serão apagadas automaticamente.
+2. layer_index: Dado do tipo inteiro. Indica a ordem da camada (ex: camada 0, camada 1), com a verificação de que o valor deve ser maior ou igual a 0.
+3. num_neurons: Dado do tipo inteiro. Define quantos neurônios existem nessa camada específica, com a verificação de que o valor deve ser estritamente maior que 0.
+4. activation_function: Dado do tipo inteiro. É um parâmetro numérico que identifica qual função de ativação (como Gaussian ou Sigmoid) será aplicada nesta camada.
+  
+Observação sobre a Identidade
+A Chave Primária é a combinação de (experiment_id + layer_index).
+Isso significa que o banco de dados entende que a "identidade" de uma linha é o conjunto desses dois valores. Isso impede, por exemplo, que você tente inserir duas vezes a "Camada 0" para o mesmo "Experimento 1".
 
 ### Orquestrador X Worker
 
