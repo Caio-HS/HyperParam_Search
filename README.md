@@ -38,11 +38,19 @@ Para a arquitetura em camadas funcionar, é necessário que exista um "contrato"
 
 ### Orquestrador X Banco de dados
 
-To-Do
+
 
 ### Orquestrador X Worker
 
-To-Do
+O orquestrador deve passar, por parametro, para o worker os parametros da rede a ser treinada. Listarei eles em ordem:
+1. O Numero de camadas, contando com a de entrada e a de saída. (unsigned int)
+2. Grau de densidade da rede (quantos % das conexões possiveis entre neuronios vão existir), acima de 99.5% a rede é considerada densa (Arredonda para 100% internamente). (float)
+3. Tipo de rede, existe no momento a em camadas ("Layers"), onde os neuronios de cada camada só se comunicam com a acamada seguinte, e a "Shortcut", onde os neuronios de uma camada podem se comunicar com todas as camadas a frente (0 é a Layers e 1 é a Shortcut). (int)
+4. O algoritmo de treino, como isso é um tópico por si só, não irei entrar em detalhes: 0 é trein incremental, 1 é treino em batch, 2 é Resilient Back Propagation (RPROP), 3 é o Quick Propagation e 4 é o Simulated Annealing Resilient Back Propagation (SARPROP). (int)
+5. A função de erro, 0 é linear (geralmente a desejável) e 1 é a tangente (boa para punir desproporcionalmente mais desvios maiores). (int)
+6. A seed aleatória da rede, como os valores inicias da rede são gerados aleatóriamente, esse valor é a seed do gerador de numeros pseudo aleatórios, para garantir 100% de reprodutibilidade. (int)
+7. O numero de neuronios em cada camada (essa seção deve ter tantos argumentos quanto o numero de camadas, a primeira camada deve casar com o numero de entradas do problema, a ultima camada deve casar com o numero de saidas do problema). (unsigned int)
+8. A função de ativação de cada camada, 0 é linear, 1 é a função limite, 2 é a função limite simétrica, 3 é a função sigmoid, 4 é a função sigmoid por etapas, 5 é a função sigmoid simétrica, 6 é a função sigmoid simétrica por etapas, 7 é a função gaussiana, 8 é a função gaussiana simétrica, 9 é a função gaussiana por etapas, 10 é a função Elliot, 11 é a função Elliot simétrica, 12 é a função linear por partes, 13 é a função linear por partes simétrica, 14 é a função seno simétrica, 15 é a função cosseno simétrica, 16 é a função seno e 17 é a função cosseno. (int)
 
 ## Ambiente
 
