@@ -93,17 +93,6 @@ static int FANN_API callback_function(struct fann *ann, struct fann_train_data *
     return 0;
 }
 
-int set_parameters_hash(const PARAMETERS * restrict const params, RESULTS * restrict const results)
-{
-    if(params == NULL) { return EINVAL; }
-    if(results == NULL) { return EINVAL; }
-
-    results->parameters_hash = XXH64(params, sizeof(PARAMETERS), HASHS_SEED);
-    
-    return 0;
-}
-
-
 //função temporaria para testes
 void print_results(const RESULTS * restrict const results) 
 {
