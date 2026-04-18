@@ -54,6 +54,7 @@ static int alloc_vector (unsigned int num_layers, void * restrict * restrict con
     if(size == NULL) { return EINVAL; }
 
     (*size) = (unsigned int) (sizeof(unsigned int) + sizeof(float) + sizeof(NET_TYPE) + sizeof(TRAIN_ALGO) + sizeof(ERROR_FUNC) + sizeof(unsigned int) + num_layers * ( (unsigned int) (sizeof(unsigned int) + sizeof(ACTIV_FUNC)) ));
+    if ( (*size) == 0 ) { (*vector_output) = NULL; return 0; }
 
     (*vector_output) = malloc( (*size) );
     if( (*vector_output) == NULL ) { return ENOMEM; }
@@ -65,6 +66,7 @@ static int write_parameters_in_vector (const PARAMETERS * restrict const params,
 {
     if(params == NULL) { return EINVAL; }
     if(target_vector == NULL) { return EINVAL; }
+    if( (*target_vector) == NULL ) { return EINVAL; }
     if(size == 0) { return EINVAL; }
 
     size_t actual_shift = 0;
