@@ -71,40 +71,40 @@ static int write_parameters_in_vector (const PARAMETERS * restrict const params,
     size_t data_size = 0;
 
     data_size = sizeof(unsigned int);
-    memcpy(target_vector + actual_shift, &params->num_layers, data_size);
+    memcpy((*target_vector + actual_shift), &params->num_layers, data_size);
     actual_shift += data_size;
 
     data_size = sizeof(float);
-    memcpy(target_vector + actual_shift, &params->sparsity, data_size);
+    memcpy((*target_vector + actual_shift), &params->sparsity, data_size);
     actual_shift += data_size;
 
     data_size = sizeof(NET_TYPE);
-    memcpy(target_vector + actual_shift, &params->network_type, data_size);
+    memcpy((*target_vector + actual_shift), &params->network_type, data_size);
     actual_shift += data_size;
 
     data_size = sizeof(TRAIN_ALGO);
-    memcpy(target_vector + actual_shift, &params->train_algorithm, data_size);
+    memcpy((*target_vector + actual_shift), &params->train_algorithm, data_size);
     actual_shift += data_size;
 
     data_size = sizeof(ERROR_FUNC);
-    memcpy(target_vector + actual_shift, &params->error_function, data_size);
+    memcpy((*target_vector + actual_shift), &params->error_function, data_size);
     actual_shift += data_size;
 
     data_size = sizeof(unsigned int);
-    memcpy(target_vector + actual_shift, &params->random_seed, data_size);
+    memcpy((*target_vector + actual_shift), &params->random_seed, data_size);
     actual_shift += data_size;
 
     for (int i = 0; i < params->num_layers; i++)
     {
         data_size = sizeof(unsigned int);
-        memcpy(target_vector + actual_shift, &(params->neurons_by_layer[i]), data_size);
+        memcpy((*target_vector + actual_shift), &(params->neurons_by_layer[i]), data_size);
         actual_shift += data_size;
     }
 
     for (int i = 0; i < params->num_layers; i++)
     {
         data_size = sizeof(ACTIV_FUNC);
-        memcpy(target_vector + actual_shift, &(params->activation_by_layer[i]), data_size);
+        memcpy((*target_vector + actual_shift), &(params->activation_by_layer[i]), data_size);
         actual_shift += data_size;
     }
 
