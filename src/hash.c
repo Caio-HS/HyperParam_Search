@@ -18,7 +18,7 @@ int set_parameters_hash(const PARAMETERS * restrict const params, RESULTS * rest
 
     int error_code = 0;
 
-    const void * restrict parameters_vector = NULL;
+    void * restrict parameters_vector = NULL;
     unsigned int size = 0;
 
     error_code = get_parameters_vector(params, &parameters_vector, &size);
@@ -31,17 +31,16 @@ int set_parameters_hash(const PARAMETERS * restrict const params, RESULTS * rest
     return 0;
 }
 
-static int get_parameters_vector (const PARAMETERS * restrict const params, const void * restrict * restrict const vector_output, unsigned int * restrict const size)
+static int get_parameters_vector (const PARAMETERS * restrict const params, void * restrict * restrict const vector_output, unsigned int * restrict const size)
 {
     if(params == NULL) { return EINVAL; }
     if(vector_output == NULL) { return EINVAL; }
     if(size == NULL) { return EINVAL; }
 
-    void * restrict aux_vector = NULL;
-    error_code = alloc_vector(params->num_layers, aux_vector, size);
+    error_code = alloc_vector(params->num_layers, vector_output, size);
     if(error_code != 0) { return error_code; }
 
-    error_code = write_parameters_in_vector(params, aux_vector, (*size) );
+    error_code = write_parameters_in_vector(params, vector_output, (*size) );
     if(error_code != 0) { return error_code; }
 
     (*vector_output) = aux_vector;
@@ -49,7 +48,7 @@ static int get_parameters_vector (const PARAMETERS * restrict const params, cons
     return 0;
 }
 
-static int alloc_vector (unsigned int num_layers, const void * restrict * restrict const vector_output, unsigned int * restrict const size)
+static int alloc_vector (unsigned int num_layers, void * restrict * restrict const vector_output, unsigned int * restrict const size)
 {
     if(vector_output == NULL) { return EINVAL; }
     if(size == NULL) { return EINVAL; }
@@ -68,7 +67,7 @@ static int write_parameters_in_vector (const PARAMETERS * restrict const params,
     if(target_vector == NULL) { return EINVAL; }
     if(size == 0) { return EINVAL; }
 
-    size_t actual_shitf = 0;
+    size_t actual_shift = 0;
     size_t data_size = 0;
 
     data_size = sizeof(unsigned int);
@@ -95,14 +94,14 @@ static int write_parameters_in_vector (const PARAMETERS * restrict const params,
     memcpy(target_vector + actual_shift, &params->random_seed, data_size);
     actual_shift += data_size;
 
-    for (int i = 0; i < num_layers; i++)
+    for (int i = 0; i < params->num_layers; i++)
     {
         data_size = sizeof(unsigned int);
         memcpy(target_vector + actual_shift, &(params->neurons_by_layer[i]), data_size);
         actual_shift += data_size;
     }
 
-    for (int i = 0; i < num_layers; i++)
+    for (int i = 0; i < params->num_layers; i++)
     {
         data_size = sizeof(ACTIV_FUNC);
         memcpy(target_vector + actual_shift, &(params->activation_by_layer[i]), data_size);
@@ -111,4 +110,3 @@ static int write_parameters_in_vector (const PARAMETERS * restrict const params,
 
     return 0;
 }
-
