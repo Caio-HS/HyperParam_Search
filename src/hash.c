@@ -9,7 +9,7 @@
 
 static int get_parameters_vector (const PARAMETERS * restrict const params, void * restrict * restrict const vector_output, unsigned int * restrict const size);
 static int alloc_vector (unsigned int num_layers, void * restrict * restrict const vector_output, unsigned int * restrict const size);
-static int write_parameters_in_vector (const PARAMETERS * restrict const params, unsigned char * restrict * restrict const target_vector, const unsigned int size);
+static int write_parameters_in_vector (const PARAMETERS * restrict const params, unsigned char * restrict const * restrict const target_vector, const unsigned int size);
 
 int set_parameters_hash(const PARAMETERS * restrict const params, RESULTS * restrict const results)
 {
@@ -42,7 +42,7 @@ static int get_parameters_vector (const PARAMETERS * restrict const params, void
     error_code = alloc_vector(params->num_layers, vector_output, size);
     if(error_code != 0) { return error_code; }
 
-    error_code = write_parameters_in_vector(params, (unsigned char * restrict *) vector_output, (*size) );
+    error_code = write_parameters_in_vector(params, (unsigned char * restrict const *) vector_output, (*size) );
     if(error_code != 0) { return error_code; }
 
     return 0;
@@ -61,7 +61,7 @@ static int alloc_vector (unsigned int num_layers, void * restrict * restrict con
     return 0;
 }
 
-static int write_parameters_in_vector (const PARAMETERS * restrict const params, unsigned char * restrict * restrict const target_vector, const unsigned int size)
+static int write_parameters_in_vector (const PARAMETERS * restrict const params, unsigned char * restrict const * restrict const target_vector, const unsigned int size)
 {
     if(params == NULL) { return EINVAL; }
     if(target_vector == NULL) { return EINVAL; }
