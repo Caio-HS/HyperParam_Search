@@ -7,8 +7,8 @@
 #include "get_params.h"
 #include "result.h"
 
-static int get_parameters_vector (const PARAMETERS * restrict const params, const void * restrict * restrict const vector_output, unsigned int * restrict const size);
-static int alloc_vector (unsigned int num_layers, const void * restrict * restrict const vector_output, unsigned int * restrict const size);
+static int get_parameters_vector (const PARAMETERS * restrict const params, void * restrict * restrict const vector_output, unsigned int * restrict const size);
+static int alloc_vector (unsigned int num_layers, void * restrict * restrict const vector_output, unsigned int * restrict const size);
 static int write_parameters_in_vector (const PARAMETERS * restrict const params, void * restrict * restrict const target_vector, const unsigned int size);
 
 int set_parameters_hash(const PARAMETERS * restrict const params, RESULTS * restrict const results)
