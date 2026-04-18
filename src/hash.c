@@ -37,13 +37,13 @@ static int get_parameters_vector (const PARAMETERS * restrict const params, void
     if(vector_output == NULL) { return EINVAL; }
     if(size == NULL) { return EINVAL; }
 
+    int error_code = 0;
+
     error_code = alloc_vector(params->num_layers, vector_output, size);
     if(error_code != 0) { return error_code; }
 
     error_code = write_parameters_in_vector(params, vector_output, (*size) );
     if(error_code != 0) { return error_code; }
-
-    (*vector_output) = aux_vector;
 
     return 0;
 }
@@ -53,7 +53,7 @@ static int alloc_vector (unsigned int num_layers, void * restrict * restrict con
     if(vector_output == NULL) { return EINVAL; }
     if(size == NULL) { return EINVAL; }
 
-    (*size) = sizeof(unsigned int) + sizeof(float) + sizeof(NET_TYPE) + sizeof(TRAIN_ALGO) + sizeof(ERROR_FUNC) + sizeof(unsigned int) + num_layers * ( sizeof(unsigned int) + sizeof(ACTIV_FUNC) );
+    (*size) = (unsigned int) (sizeof(unsigned int) + sizeof(float) + sizeof(NET_TYPE) + sizeof(TRAIN_ALGO) + sizeof(ERROR_FUNC) + sizeof(unsigned int) + num_layers * ( (unsigned int) (sizeof(unsigned int) + sizeof(ACTIV_FUNC)) ));
 
     (*vector_output) = malloc( (*size) );
     if( (*vector_output) ) { return ENOMEM; }
