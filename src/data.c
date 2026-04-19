@@ -3,8 +3,9 @@
 #include <errno.h>
 
 #include "data.h"
-
+/*  Trechos relacionados sobre analise por gerar possivel nao determinismo, requerer modificacao intrusiva para correcao e gerar grande overhead. Codigo 0001-NDE-835
 static int prepare_data(struct fann_train_data * restrict const data);
+*/
 static int get_data_subset(struct fann_train_data ** restrict const output, const float percentage_of_dataset_used, const bool isTest, const char * restrict const filename);
 
 int get_train_data(struct fann_train_data ** restrict const data, const char * restrict const filename)
@@ -16,8 +17,10 @@ int get_train_data(struct fann_train_data ** restrict const data, const char * r
     error_code = get_data_subset(data, DATA_USED_IN_TRAIN, false, filename);
     if(error_code != 0) { return error_code; }
 
+/* 0001-NDE-835
     error_code = prepare_data(*data);
-    if(error_code != 0) { return error_code; }
+    if(error_code != 0) { return error_code; } 
+*/
     
     return 0;
 }
@@ -31,23 +34,26 @@ int get_test_data(struct fann_train_data ** restrict const data, const char * re
     error_code = get_data_subset(data, 1.0 - DATA_USED_IN_TRAIN, true, filename);
     if(error_code != 0) { return error_code; }
 
+    
+/* 0001-NDE-835
     error_code = prepare_data(*data);
-    if(error_code != 0) { return error_code; }
+    if(error_code != 0) { return error_code; } 
+*/
     
     return 0;
 }
 
-
+/* 0001-NDE-835
 static int prepare_data(struct fann_train_data * restrict const data)
 {
     if (data == NULL) { return EINVAL; }
-    
+
     fann_shuffle_train_data(data);
     fann_scale_train_data(data, MIN_SCALE, MAX_SCALE);
 
     return 0;
 }
-
+*/
 
 static int get_data_subset(struct fann_train_data ** restrict const output, const float percentage_of_dataset_used, const bool isTest, const char * restrict const filename)
 {
