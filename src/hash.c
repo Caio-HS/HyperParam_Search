@@ -97,11 +97,11 @@ static int write_parameters_in_vector (const PARAMETERS * restrict const params,
     actual_shift += data_size;
 
     data_size = sizeof(unsigned int) * params->num_layers;
-    memcpy((*target_vector + actual_shift), (params.neurons_by_layer), data_size);
+    memcpy((*target_vector + actual_shift), (params->neurons_by_layer), data_size);
     actual_shift += data_size;
     
     data_size = sizeof(ACTIV_FUNC) * params->num_layers;
-    memcpy((*target_vector + actual_shift), (params.activation_by_layer), data_size);
+    memcpy((*target_vector + actual_shift), (params->activation_by_layer), data_size);
     actual_shift += data_size;
     
     return 0;
