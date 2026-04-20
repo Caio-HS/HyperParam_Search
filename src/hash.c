@@ -54,7 +54,7 @@ static int alloc_vector (unsigned int num_layers, void * restrict * restrict con
     if(vector_output == NULL) { return EINVAL; }
     if(size == NULL) { return EINVAL; }
 
-    (*size) = (unsigned int) (sizeof(unsigned int) + sizeof(float) + sizeof(NET_TYPE) + sizeof(TRAIN_ALGO) + sizeof(ERROR_FUNC) + sizeof(unsigned int) + num_layers * ( (unsigned int) (sizeof(unsigned int) + sizeof(ACTIV_FUNC)) ));
+    (*size) = PARAMETERS_UTIL_DATA_SIZE;
     if ( (*size) == 0 ) { (*vector_output) = NULL; return 0; }
 
     (*vector_output) = malloc( (*size) );
