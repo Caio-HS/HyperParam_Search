@@ -8,6 +8,7 @@
 #define INVALID_PARAM 2u
 #define VETORIAL_PARAMS 2u
 #define MINIMUM_PARAMS 9
+#define PARAMETERS_UTIL_DATA_SIZE (unsigned int) (sizeof(unsigned int) + sizeof(float) + sizeof(NET_TYPE) + sizeof(TRAIN_ALGO) + sizeof(ERROR_FUNC) + sizeof(unsigned int) + num_layers * ( (unsigned int) (sizeof(unsigned int) + sizeof(ACTIV_FUNC)) ))
 
 typedef enum fann_errorfunc_enum ERROR_FUNC;
 typedef enum fann_train_enum TRAIN_ALGO;
