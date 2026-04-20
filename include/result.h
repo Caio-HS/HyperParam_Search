@@ -7,11 +7,13 @@
 #include "get_params.h"
 
 #define HASHS_SEED 0
+#define RESULTS_COMPATIBILITY_VERSION 1u
 
 struct results
 {
     uint64_t total_parameters;
     uint64_t parameters_hash;
+    uint64_t version;
     uint64_t train_time;
     float train_mse_error;
     uint64_t train_bit_error;
