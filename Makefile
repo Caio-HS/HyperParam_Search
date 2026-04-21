@@ -14,6 +14,9 @@ OBJ_BASE_DIR = obj
 # Flags comuns a ambos os modos
 COMMON_FLAGS = -I$(INC_DIR)
 
+# Define o padrão C e pede aderência estrita
+C_STD_FLAGS = -std=c2x -pedantic 
+
 # Flags de Debug (conforme solicitado)
 DEBUG_FLAGS = -O0 -Wall -Wextra -g -Wformat=2 -Wconversion -Wcast-qual \
               -Wcast-align=strict -Wpointer-arith -Wshadow -Wundef -Wwrite-strings \
@@ -23,7 +26,7 @@ DEBUG_FLAGS = -O0 -Wall -Wextra -g -Wformat=2 -Wconversion -Wcast-qual \
               -Wmissing-declarations -Winline -Wunsafe-loop-optimizations -Wpacked \
               -Wformat-overflow=2 -Wformat-truncation=2 -Wfloat-equal \
               -Woverlength-strings -Wstringop-overflow -Wstringop-truncation \
-              -Wimplicit-fallthrough=5 -Waggregate-return -Wbad-function-cast -fanalyzer \
+              -Wimplicit-fallthrough=5 -Wno-aggregate-return -Wbad-function-cast -fanalyzer \
               -Wanalyzer-malloc-leak -Wanalyzer-use-of-uninitialized-value \
               -Wanalyzer-null-dereference -Wanalyzer-double-free -Wanalyzer-tainted-size \
               -Wanalyzer-possible-null-argument -Wvolatile-register-var -Wanalyzer-tainted-divisor \
@@ -35,7 +38,8 @@ DEBUG_FLAGS = -O0 -Wall -Wextra -g -Wformat=2 -Wconversion -Wcast-qual \
               -Wanalyzer-unsafe-call-within-signal-handler -Wanalyzer-tainted-array-index \
               -Wanalyzer-use-of-pointer-in-stale-stack-frame -Wanalyzer-write-to-const \
               -Wanalyzer-write-to-string-literal -Wvector-operation-performance \
-              -Wno-aggregate-return -Wanalyzer-too-complex --param=analyzer-max-enodes-per-program-point=260000
+              -Wanalyzer-too-complex --param=analyzer-max-enodes-per-program-point=260000
+#              -fsanitize=address,undefined,leak -fstack-protector-strong
 
 # Flags de Execução (Release)
 # -O3: Otimização agressiva
@@ -52,8 +56,9 @@ LDFLAGS = -lfann -lm -lxxhash
 MODE ?= release
 
 ifeq ($(MODE), debug)
-    CFLAGS = $(COMMON_FLAGS) $(DEBUG_FLAGS)
+    CFLAGS = $(COMMON_FLAGS) $(C_STD_FLAGS) $(DEBUG_FLAGS)
     OBJ_DIR = $(OBJ_BASE_DIR)/debug
+#    LDFLAGS += -fsanitize=address,undefined,leak
 else
     CFLAGS = $(COMMON_FLAGS) $(RELEASE_FLAGS)
     OBJ_DIR = $(OBJ_BASE_DIR)/release
