@@ -15,7 +15,7 @@
 static int FANN_API callback_function(struct fann *ann, struct fann_train_data *train, unsigned int max_epochs, unsigned int epochs_between_reports, float desired_error, unsigned int epochs);
 
 //função temporaria para testes
-static void print_results(const RESULTS * restrict const results);
+//static void print_results(const RESULTS * restrict const results);
 
 int instrument_ann(struct fann * restrict const ann)
 {
@@ -69,16 +69,16 @@ int send_results(const RESULTS * restrict const results, const PARAMETERS * cons
     if(results == NULL) {return EINVAL;}
     if(params == NULL) {return EINVAL;}
 
-    fwrite(results.total_parameters, sizeof(unsigned int), 1, stdout);
-    fwrite(results.parameters_hash, sizeof(unsigned int), 1, stdout);
-    fwrite(results.data_points_needed, sizeof(unsigned int), 1, stdout);
-    fwrite(results.version, sizeof(unsigned int), 1, stdout);
-    fwrite(results.train_time, sizeof(unsigned int), 1, stdout);
-    fwrite(results.train_mse_error, sizeof(float), 1, stdout);
-    fwrite(results.train_bit_error, sizeof(unsigned int), 1, stdout);
-    fwrite(results.test_time, sizeof(unsigned int), 1, stdout);
-    fwrite(results.test_mse_error, sizeof(float), 1, stdout);
-    fwrite(results.test_bit_error, sizeof(unsigned int), 1, stdout);
+    fwrite(&results->total_parameters, sizeof(unsigned int), 1, stdout);
+    fwrite(&results->parameters_hash, sizeof(unsigned int), 1, stdout);
+    fwrite(&results->data_points_needed, sizeof(unsigned int), 1, stdout);
+    fwrite(&results->version, sizeof(unsigned int), 1, stdout);
+    fwrite(&results->train_time, sizeof(unsigned int), 1, stdout);
+    fwrite(&results->train_mse_error, sizeof(float), 1, stdout);
+    fwrite(&results->train_bit_error, sizeof(unsigned int), 1, stdout);
+    fwrite(&results->test_time, sizeof(unsigned int), 1, stdout);
+    fwrite(&results->test_mse_error, sizeof(float), 1, stdout);
+    fwrite(&results->test_bit_error, sizeof(unsigned int), 1, stdout);
     
     return 0;
 }
