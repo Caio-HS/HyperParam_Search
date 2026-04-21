@@ -46,6 +46,8 @@ int set_train_results(struct fann * restrict const ann, uint64_t time, RESULTS *
     const CONTEXT * restrict const context = (const CONTEXT *) fann_get_user_data(ann);
     if(context == NULL) {return EINVAL;}
     results->data_points_needed = context->last_epoch;
+    results->version = RESULTS_COMPATIBILITY_VERSION;
+    
     return 0;
 }
 
@@ -67,8 +69,16 @@ int send_results(const RESULTS * restrict const results, const PARAMETERS * cons
     if(results == NULL) {return EINVAL;}
     if(params == NULL) {return EINVAL;}
 
-    //função temporaria para testes
-    print_results(results);
+    fwrite(results.total_parameters, sizeof(unsigned int), 1 stdout);
+    fwrite(results.parameters_hash, sizeof(unsigned int), 1 stdout);
+    fwrite(results.data_points_needed, sizeof(unsigned int), 1 stdout);
+    fwrite(results.version, sizeof(unsigned int), 1 stdout);
+    fwrite(results.train_time, sizeof(unsigned int), 1 stdout);
+    fwrite(results.train_mse_error, sizeof(float), 1 stdout);
+    fwrite(results.train_bit_error, sizeof(unsigned int), 1 stdout);
+    fwrite(results.test_time, sizeof(unsigned int), 1 stdout);
+    fwrite(results.test_mse_error, sizeof(float), 1 stdout);
+    fwrite(results.test_bit_error, sizeof(unsigned int), 1 stdout);
     
     return 0;
 }
@@ -93,6 +103,7 @@ static int FANN_API callback_function(struct fann *ann, struct fann_train_data *
     return 0;
 }
 
+/*
 //função temporaria para testes
 void print_results(const RESULTS * restrict const results) 
 {
@@ -123,3 +134,4 @@ void print_results(const RESULTS * restrict const results)
     
     printf("========================================\n\n");
 }
+*/
