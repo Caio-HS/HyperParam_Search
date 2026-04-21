@@ -13,6 +13,7 @@ struct results
 {
     uint64_t total_parameters;
     uint64_t parameters_hash;
+    uint64_t data_points_needed; //How much data entries are needed to reach the target error
     uint64_t version;
     uint64_t train_time;
     float train_mse_error;
@@ -20,7 +21,6 @@ struct results
     uint64_t test_time;
     float test_mse_error;
     uint64_t test_bit_error;
-    uint64_t data_points_needed; //How much data entries are needed to reach the target error
 };
 
 struct context
