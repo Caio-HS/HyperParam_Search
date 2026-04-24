@@ -1,0 +1,29 @@
+ Performance counter stats for './worker 4 1.0 0 2 1 0 8 32 16 2 0 5 5 0':
+
+         74,476.17 msec task-clock                       #    1.000 CPUs utilized             
+               397      context-switches                 #    5.331 /sec                      
+                12      cpu-migrations                   #    0.161 /sec                      
+                56      page-faults                      #    0.752 /sec                      
+   133,525,178,686      cycles                           #    1.793 GHz                         (23.07%)
+    77,894,599,252      instructions                     #    0.58  insn per cycle              (23.08%)
+    10,648,809,546      branches                         #  142.983 M/sec                       (23.08%)
+       369,083,922      branch-misses                    #    3.47% of all branches             (23.08%)
+    21,248,820,788      L1-dcache-loads                  #  285.310 M/sec                       (15.39%)
+   <not supported>      L1-dcache-load-misses                                                 
+        20,430,561      LLC-loads                        #  274.323 K/sec                       (15.39%)
+           530,795      LLC-load-misses                  #    2.60% of all LL-cache accesses    (15.39%)
+    37,787,161,342      L1-icache-loads                  #  507.372 M/sec                       (15.39%)
+        11,109,440      L1-icache-load-misses            #    0.03% of all L1-icache accesses   (15.38%)
+    21,245,777,869      dTLB-loads                       #  285.269 M/sec                       (15.38%)
+           743,442      dTLB-load-misses                 #    0.00% of all dTLB cache accesses  (15.38%)
+    77,901,310,015      iTLB-loads                       #    1.046 G/sec                       (23.07%)
+         2,559,270      iTLB-load-misses                 #    0.00% of all iTLB cache accesses  (23.07%)
+   <not supported>      L1-dcache-prefetches                                                  
+   <not supported>      L1-dcache-prefetch-misses                                             
+
+      74.496849273 seconds time elapsed
+
+      74.447684000 seconds user
+       0.027993000 seconds sys
+      74.447684000 seconds user
+       0.027993000 seconds sys
