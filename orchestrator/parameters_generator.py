@@ -1,20 +1,19 @@
+import random
 import parameters as params
-
-len_network_type = len(params.network_type)
-len_train_algorithm = len(params.train_algorithm)
-len_error_function = len(params.error_function)
-len_density = len(params.density)
-len_num_layers = len(params.num_layers)
-len_neuron_numbers = len(params.neuron_numbers)
-len_activation_function = len(params.activation_function)
 
 current_network_type = 0
 current_train_algorithm = 0
 current_error_function = 0
 current_density = 0
 current_num_layers = 0
-current_neuron_numbers = 0
-current_activation_function = 0
 
 def next_param():
-  for
+  for num_layers in params.num_layers:
+    for density in params.density:
+      for network_type in params.network_type:
+        for train_algorithm in params.train_algorithm:
+          for error_function in params.error_function:
+            config = str(num_layers) + " " + str(density) + " " + str(network_type) + " " + str(train_algorithm) + " " + str(error_function) + " " + str(random.randint(0, 2**64 - 1))
+    for i in range(num_layers):
+
+            
