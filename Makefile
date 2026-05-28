@@ -91,6 +91,9 @@ $(OBJ_DIR):
 	mkdir -p $(OPTIMIZATION_REPORTS_DIR)
 
 # Atalhos práticos
+sao_pedro:
+	$(MAKE) MODE=debug
+
 debug:
 	$(MAKE) MODE=debug
 
