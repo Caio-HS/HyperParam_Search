@@ -24,5 +24,8 @@ while true:
         print(f"Worker pid: {work.p.pid}, parameters: {work.parameters}, returned: {returned}")
 
     raw_result = p.stdout.read()
-    res = struct.unpack(RETURN_FORMAT, raw_result[:RETURN_SIZE])
-    db.add_record(conn, res, parameters)
+#    res = struct.unpack(RETURN_FORMAT, raw_result[:RETURN_SIZE])
+    db.add_record(conn, raw_results, parameters)
+
+
+
