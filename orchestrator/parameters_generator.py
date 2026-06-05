@@ -27,22 +27,20 @@ def save_state(count, layers):
   layer_index = layers
 
 def mount_command(current_num_layers, current_density, current_network_type, current_train_algorithm, current_error_function, current_neuron_numbers, current_activation_function):
-  parameters_command = ""
-  parameters_command += str(current_num_layers)
-  parameters_command += " " + str(current_density)
-  parameters_command += " " + str(current_network_type)
-  parameters_command += " " + str(current_train_algorithm)
-  parameters_command += " " + str(current_error_function)
-  parameters_command += " " + str(random.randint(0, 2**64 - 1))
+  cmd_parts = [
+      str(current_num_layers),
+      str(current_density),
+      str(current_network_type),
+      str(current_train_algorithm),
+      str(current_error_function),
+      str(random.randint(0, 2**64 - 1))
+  ]
     
-  for i in range(int(current_num_layers)):
-    parameters_command += " " + str(current_neuron_numbers[i])
 
-  for i in range(int(current_num_layers)):
-    parameters_command += " " + str(current_activation_function[i])
-        
-  return parameters_command
-  
+  cmd_parts.extend(str(n) for n in current_neuron_numbers)
+  cmd_parts.extend(str(a) for a in current_activation_function)
+    
+  return " ".join(cmd_parts)  
 
 def pic_value(array, counter, previous_combinations):
   position = (counter // (previous_combinations)) % len(array)
