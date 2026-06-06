@@ -33,22 +33,22 @@ def add_record(conn, res, params):
     """
     
     experiment_data = (
-        parameters.num_layers, 
+        parameters.num_layers  % 2**32, 
         parameters.sparsity, 
-        parameters.train_algorithm, 
-        parameters.network_type, 
-        parameters.error_function, 
-        parameters.random_seed,
+        parameters.train_algorithm  % 2**32, 
+        parameters.network_type  % 2**32, 
+        parameters.error_function  % 2**32, 
+        parameters.random_seed  % 2**32,
         0, 
-        results.hash_id, 
-        results.total_parameters, 
-        results.train_time, 
+        results.hash_id  % 2**32, 
+        results.total_parameters  % 2**32, 
+        results.train_time  % 2**32, 
         results.train_mse_error, 
-        results.train_bit_error, 
-        results.test_time, 
+        results.train_bit_error  % 2**32, 
+        results.test_time % 2**32, 
         results.test_mse_error, 
-        results.test_bit_error, 
-        results.data_points_needed
+        results.test_bit_error  % 2**32, 
+        results.data_points_needed  % 2**32
     )
     
     cursor.execute(query_experiments, experiment_data)
