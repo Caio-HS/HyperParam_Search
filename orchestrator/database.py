@@ -24,7 +24,7 @@ def add_record(conn, res, params):
   
     # 1. Inserção do Experimento
     query_experiments = """
-        INSERT INTO experiments (
+        INSERT INTO experiment (
             num_layers, density, train_algorithm, network_type, error_function, 
             seed, version, parameter_hash, total_parameters, train_time_nanoseconds, 
             train_mse_error, train_bit_error, test_time_nanoseconds, test_mse_error, 
