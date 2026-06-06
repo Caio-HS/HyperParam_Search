@@ -4,15 +4,15 @@ from collections import namedtuple
 # Definição de uma estrutura nomeada para facilitar o acesso no Orquestrador
 ExecutionResult = namedtuple('ExecutionResult', [
     'total_parameters',
+    'hash_id',          # Caso você envie um hash (ex: xxhash) do modelo/parâmetros
     'data_points_needed',
+    'version',
     'train_time',
-    'train_bit_error',
-    'test_bit_error',
     'train_mse_error',
+    'train_bit_error',
     'test_time',
     'test_mse_error',
-    'hash_id',          # Caso você envie um hash (ex: xxhash) do modelo/parâmetros
-    'status_code'       # Um indicador de sucesso/erro interno do worker
+    'test_bit_error'
 ])
 
 class WorkerResultParser:
