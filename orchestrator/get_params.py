@@ -23,9 +23,9 @@ class NetworkParameters:
     def __init__(self):
         self.num_layers = 0
         self.sparsity = 0.0
-        self.network_type = None
-        self.train_algorithm = None
-        self.error_function = None
+        self.network_type = 0
+        self.train_algorithm = 0
+        self.error_function = 0
         self.random_seed = 0
         self.neurons_by_layer = []
         self.activation_by_layer = []
@@ -62,19 +62,19 @@ def parse_parameters_string(param_string: str) -> NetworkParameters:
     net_type_val = int(argv[3])
     if net_type_val not in NET_TYPE:
         raise ValueError("INVALID_PARAM: network_type")
-    parameters.network_type = NET_TYPE[net_type_val]
+    parameters.network_type = net_type_val
 
     # Train Algorithm (Índice 4)
     train_algo_val = int(argv[4])
     if train_algo_val not in TRAIN_ALGO:
         raise ValueError("INVALID_PARAM: train_algorithm")
-    parameters.train_algorithm = TRAIN_ALGO[train_algo_val]
+    parameters.train_algorithm = train_algo_val
 
     # Error Function (Índice 5)
     error_func_val = int(argv[5])
     if error_func_val not in ERROR_FUNC:
         raise ValueError("INVALID_PARAM: error_function")
-    parameters.error_function = ERROR_FUNC[error_func_val]
+    parameters.error_function = error_func_val
 
     # Random Seed (Índice 6)
     parameters.random_seed = int(argv[6])
@@ -92,6 +92,6 @@ def parse_parameters_string(param_string: str) -> NetworkParameters:
         act_val = int(argv[activations_start_idx + i])
         if act_val not in ACTIV_FUNC:
             raise ValueError(f"INVALID_PARAM: activation_by_layer em index {i}")
-        parameters.activation_by_layer.append(ACTIV_FUNC[act_val])
+        parameters.activation_by_layer.append(act_val)
 
     return parameters
