@@ -14,7 +14,7 @@ while True:
 
     parameters = params_gen.next_param()
     cmd = WORKER_NAME + parameters
-    p = proc.Popen(cmd, stdout=subprocess.PIPE)
+    p = proc.Popen(cmd, stdout=proc.PIPE)
 
     output, errors_outputed = p.communicate()
 
