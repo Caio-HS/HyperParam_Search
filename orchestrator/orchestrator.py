@@ -10,7 +10,7 @@ RETURN_SIZE = 72
 
 conn = db.database_setup()
 
-while true:
+while True:
 
     parameters = params_gen.next_params()
     cmd = WORKER_NAME + parameters
