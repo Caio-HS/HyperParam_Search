@@ -12,7 +12,7 @@ conn = db.database_setup()
 
 while True:
 
-    parameters = params_gen.next_params()
+    parameters = params_gen.next_param()
     cmd = WORKER_NAME + parameters
     p = proc.Popen(cmd, stdout=subprocess.PIPE)
 
