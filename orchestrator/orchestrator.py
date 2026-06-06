@@ -14,13 +14,13 @@ while True:
 
     parameters = params_gen.next_param()
     cmd = WORKER_NAME + parameters
-    p = proc.Popen(cmd, stdout=proc.PIPE)
+    p = proc.Popen(cmd.split(), stdout=proc.PIPE)
 
     output, errors_outputed = p.communicate()
 
     returned = p.returncode
     
-    if returned is not 0:
+    if returned != 0:
         print(f"Worker pid: {work.p.pid}, parameters: {work.parameters}, returned: {returned}")
 
     raw_result = p.stdout.read()
