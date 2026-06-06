@@ -65,7 +65,10 @@ def next_param():
   current_neuron_numbers = [-1 for _ in range(current_num_layers)]
   for i in range(current_num_layers):
     current_neuron_numbers[i], previous_combinations = pic_value(params.neuron_numbers, parameters_genereted, previous_combinations)
-  
+
+  #GAMBIARRA TEMPORARIA PARA EVITAR MISMATCH ENTRE DATASET E PARAMETROS
+  current_neuron_numbers[0] = 8
+  current_neuron_numbers[-1] = 2
     
   next_parameters_genereted = parameters_genereted
   next_layer_index = layer_index
