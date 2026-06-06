@@ -24,7 +24,7 @@ class WorkerResultParser:
         self.format_string = "QQQQQfQQfQ"
         self.expected_size = 72 # Confirmado pelo sizeof(RESULTS) se houver padding
 
-    def parse_result(self, raw_bytes: bytes) -> ExecutionResult:
+    def parse_result(raw_bytes: bytes) -> ExecutionResult:
         """
         Recebe os bytes brutos do stdout do worker, isola o tamanho correto
         e desempacota na estrutura nomeada.
