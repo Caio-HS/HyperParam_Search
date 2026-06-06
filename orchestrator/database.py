@@ -15,7 +15,8 @@ def database_setup(db_path="./database/experiment_records.db"):
 
 def add_record(conn, res, params):
     parameters = parse_params.parse_parameters_string(params)
-    results = parse_result.WorkerResultParser.parse_result(res)
+    parseador = parse_result.WorkerResultParser()
+    results = parseador.parse_result(parseador, res)
     cursor = conn.cursor()
 
     cursor.execute("BEGIN")
