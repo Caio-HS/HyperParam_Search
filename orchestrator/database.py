@@ -2,7 +2,7 @@ import sqlite3 as sql
 import get_params as parse_params
 import get_results as parse_result
 
-def database_setup(db_path="../database/experiment_records.db"):
+def database_setup(db_path="./database/experiment_records.db"):
   connection = sql.connect(db_path)
   
   connection.execute("PRAGMA journal_mode=WAL;")
