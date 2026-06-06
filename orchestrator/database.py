@@ -72,5 +72,5 @@ def add_record(conn, res, params):
     
     # FIM DOS QUERIES
     cursor.execute("END")
-    cursor.commit()
+    conn.commit()
     cursor.close()
