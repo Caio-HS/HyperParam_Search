@@ -25,7 +25,7 @@ while True:
         continue
     raw_result = output
 #    res = struct.unpack(RETURN_FORMAT, raw_result[:RETURN_SIZE])
-    db.add_record(conn, raw_results, parameters)
+    db.add_record(conn, raw_result, parameters)
 
 
 
