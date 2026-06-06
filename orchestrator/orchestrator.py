@@ -8,7 +8,7 @@ WORKER_NAME = "../worker"
 RETURN_FORMAT = "QQQQQfQQfQ"
 RETURN_SIZE = 72
 
-conn = db.setup()
+conn = db.database_setup()
 
 while true:
 
