@@ -22,7 +22,7 @@ while True:
     
     if returned != 0:
         print(f"Worker pid: {p.pid}, parameters: {parameters}, returned: {returned}")
-
+        continue
     raw_result = p.stdout.read()
 #    res = struct.unpack(RETURN_FORMAT, raw_result[:RETURN_SIZE])
     db.add_record(conn, raw_results, parameters)
