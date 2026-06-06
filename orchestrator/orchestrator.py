@@ -21,7 +21,7 @@ while True:
     returned = p.returncode
     
     if returned != 0:
-        print(f"Worker pid: {work.p.pid}, parameters: {work.parameters}, returned: {returned}")
+        print(f"Worker pid: {p.pid}, parameters: {parameters}, returned: {returned}")
 
     raw_result = p.stdout.read()
 #    res = struct.unpack(RETURN_FORMAT, raw_result[:RETURN_SIZE])
