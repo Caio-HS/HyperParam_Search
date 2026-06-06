@@ -4,7 +4,7 @@ import struct
 import database as db
 import parameters_generator as params_gen
 
-WORKER_NAME = "../worker "
+WORKER_NAME = "./worker "
 RETURN_FORMAT = "QQQQQfQQfQ"
 RETURN_SIZE = 72
 
