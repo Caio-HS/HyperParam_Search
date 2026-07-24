@@ -40,7 +40,7 @@ DEBUG_FLAGS = -O0 -Wall -Wextra -g -Wformat=2 -Wconversion -Wcast-qual \
               -Wanalyzer-use-of-pointer-in-stale-stack-frame -Wanalyzer-write-to-const \
               -Wanalyzer-write-to-string-literal -Wvector-operation-performance \
               -Wanalyzer-too-complex --param=analyzer-max-enodes-per-program-point=260000 \
-#              -fsanitize=address,undefined,leak -fstack-protector-strong
+              -fsanitize=address,undefined,leak -fstack-protector-strong
 
 # Flags de Execução (Release)
 # -O3: Otimização agressiva
@@ -60,7 +60,7 @@ MODE ?= release
 ifeq ($(MODE), debug)
     CFLAGS = $(COMMON_FLAGS) $(C_STD_FLAGS) $(DEBUG_FLAGS)
     OBJ_DIR = $(OBJ_BASE_DIR)/debug
-#    LDFLAGS += -fsanitize=address,undefined,leak
+    LDFLAGS += -fsanitize=address,undefined,leak
 else
     CFLAGS = $(COMMON_FLAGS) $(RELEASE_FLAGS)
     OBJ_DIR = $(OBJ_BASE_DIR)/release
