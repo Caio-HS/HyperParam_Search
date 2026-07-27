@@ -9,6 +9,7 @@
 #define INVALID_PARAM 2u
 #define VETORIAL_PARAMS 2u
 #define MIN_LAYERS 2u
+#define MAX_LAYERS 130u
 #define MINIMUM_PARAMS 9u
 #define PARAMETERS_UTIL_DATA_SIZE (unsigned int) (sizeof(uint16_t) + sizeof(float) + sizeof(NET_TYPE) + sizeof(TRAIN_ALGO) + sizeof(ERROR_FUNC) + sizeof(uint32_t) + num_layers * ( (unsigned int) (sizeof(unsigned int) + sizeof(ACTIV_FUNC)) ))
 

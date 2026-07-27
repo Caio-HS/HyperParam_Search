@@ -17,12 +17,8 @@ ExecutionResult = namedtuple('ExecutionResult', [
 
 class WorkerResultParser:
     def __init__(self):
-        # FORMATO ATUAL: "QQQQQfQQfQ" 
-        # IMPORTANTE: O caractere '=' ou '@' no início define as regras de alinhamento.
-        # Se o C gravou a struct pura via fwrite(&results, sizeof(RESULTS), 1, stdout),
-        # o alinhamento nativo com padding do compilador deve ser respeitado usando '@'.
-        self.format_string = "<QQQQQfQQfQ"
-        self.expected_size = 72 # Confirmado pelo sizeof(RESULTS) se houver padding
+        self.format_string = "<IqIHqfIqfI"
+        self.expected_size = 50 # Confirmado pelo sizeof(RESULTS) se houver padding
 
     def parse_result(self, raw_bytes: bytes) -> ExecutionResult:
         """

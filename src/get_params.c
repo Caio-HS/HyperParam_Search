@@ -24,7 +24,7 @@ int get_parameter(const unsigned int argc, const char * restrict const * restric
     {
         uint64_t num_layers = strtoull(argv[1], NULL, 10);
         if(num_layers <= MIN_LAYERS || num_layers >= MAX_LAYERS) {return INVALID_PARAM;}
-        parameters->num_layers = (uint8_t) num_layers;
+        parameters->num_layers = (uint16_t) num_layers;
     }
 
     if(argc != MINIMUM_PARAMS + (parameters->num_layers - 1u) * 2u) {return INCORRECT_PARAMS_COUNT;}
@@ -44,7 +44,7 @@ int get_parameter(const unsigned int argc, const char * restrict const * restric
     {
         uint64_t random_seed = strtoull(argv[6], NULL, 10);
         if(random_seed / 4294967296 != 0) { return INVALID_PARAM; }
-        parameters->random_seed = random_seed;
+        parameters->random_seed = (uint32_t) random_seed;
     }
 
     parameters->activation_by_layer = malloc(sizeof(ACTIV_FUNC) * parameters->num_layers);
