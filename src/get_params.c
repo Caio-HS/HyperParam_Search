@@ -42,7 +42,7 @@ int get_parameter(const unsigned int argc, const char * restrict const * restric
     if(error_code != 0) {return error_code;}
 
     {
-        uint64_t random_seed = strtoull(argv[6]);
+        uint64_t random_seed = strtoull(argv[6], NULL, 10);
         if(random_seed / 4294967296 != 0) { return INVALID_PARAM; }
         parameters->random_seed = random_seed;
     }
