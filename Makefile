@@ -1,24 +1,24 @@
-# Nome do executável final
+# Nome do executavel final
 TARGET = worker
 
 # Compilador
 CC = gcc
 
-# Diretórios
+# Diretorios
 SRC_DIR = src
 INC_DIR = include
 OBJ_BASE_DIR = obj
 OPTIMIZATION_REPORTS_DIR = reports/optimization
 
-# --- Flags de Compilação ---
+# --- Flags de Compilacao ---
 
 # Flags comuns a ambos os modos
 COMMON_FLAGS = -I$(INC_DIR)
 
-# Define o padrão C e pede aderência estrita
-C_STD_FLAGS = -std=c2x -pedantic 
+# Define o padrao C e pedancia estrita
+C_STD_FLAGS = -std=c2x -pedantic
 
-# Flags de Debug (conforme solicitado)
+# Flags de Debug
 DEBUG_FLAGS = -O0 -Wall -Wextra -g -Wformat=2 -Wconversion -Wcast-qual \
               -Wcast-align=strict -Wpointer-arith -Wshadow -Wundef -Wwrite-strings \
               -Wstrict-overflow -Wstrict-aliasing -Wdouble-promotion -Wlogical-op \
@@ -42,19 +42,16 @@ DEBUG_FLAGS = -O0 -Wall -Wextra -g -Wformat=2 -Wconversion -Wcast-qual \
               -Wanalyzer-too-complex --param=analyzer-max-enodes-per-program-point=260000 \
               -fsanitize=address,undefined,leak -fstack-protector-strong
 
-# Flags de Execução (Release)
-# -O3: Otimização agressiva
-# -march=native: Otimiza para a arquitetura da sua CPU local
-# -DNDEBUG: Desativa asserts para performance máxima
+# Flags de Execucao (Release)
 RELEASE_FLAGS = -O3 -march=native -flto -DNDEBUG -Wall \
                 -fopt-info-all=$(OPTIMIZATION_REPORTS_DIR)/comp_report.txt
 
 # Flags do Linker
 LDFLAGS = -O3 -lfann -lm -lxxhash -fopt-info-all=$(OPTIMIZATION_REPORTS_DIR)/link_report.txt
 
-# --- Lógica de Seleção de Modo ---
+# --- Logica de Selecao de Modo ---
 
-# Define 'release' como padrão
+# Define 'release' como padrao
 MODE ?= release
 
 ifeq ($(MODE), debug)
@@ -64,7 +61,6 @@ ifeq ($(MODE), debug)
 else
     CFLAGS = $(COMMON_FLAGS) $(RELEASE_FLAGS)
     OBJ_DIR = $(OBJ_BASE_DIR)/release
-    # Adiciona LTO nas flags de linkagem se estiver em release
     LDFLAGS += -O3 -flto
 endif
 
@@ -77,30 +73,34 @@ OBJECTS = $(SOURCES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 all: $(TARGET)
 
-# Compilação do executável
+# Compilacao do executavel
 $(TARGET): $(OBJECTS)
-	$(CC) $(OBJECTS) -o $@ $(LDFLAGS)
+	@echo "[LINK] Gerando executável: $@"
+	@$(CC) $(OBJECTS) -o $@ $(LDFLAGS)
 
-# Compilação dos objetos em pastas específicas
+# Compilacao dos objetos em pastas especificas
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@echo "[CC]   Compilando $<"
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-# Criação dos diretórios
+# Criacao dos diretorios
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
-	mkdir -p $(OPTIMIZATION_REPORTS_DIR)
+	@echo "[INFO] Inicializando estrutura de diretorios..."
+	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OPTIMIZATION_REPORTS_DIR)
 
-# Atalhos práticos
+# Atalhos praticos
 sao_pedro:
-	$(MAKE) MODE=debug
+	@$(MAKE) MODE=debug
 
 debug:
-	$(MAKE) MODE=debug
+	@$(MAKE) MODE=debug
 
 release:
-	$(MAKE) MODE=release
+	@$(MAKE) MODE=release
 
 clean:
-	rm -rf $(OBJ_BASE_DIR) $(TARGET) $(OPTIMIZATION_REPORTS_DIR)
+	@echo "[CLEAN] Removendo arquivos gerados..."
+	@rm -rf $(OBJ_BASE_DIR) $(TARGET) $(OPTIMIZATION_REPORTS_DIR)
 
-.PHONY: all debug release clean
+.PHONY: all debug sao_pedro release clean
