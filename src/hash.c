@@ -73,7 +73,7 @@ static int write_parameters_in_vector (const PARAMETERS * restrict const params,
     size_t actual_shift = 0;
     size_t data_size = 0;
 
-    data_size = sizeof(unsigned int);
+    data_size = sizeof(uint16_t);
     memcpy((*target_vector + actual_shift), &params->num_layers, data_size);
     actual_shift += data_size;
 
@@ -93,7 +93,7 @@ static int write_parameters_in_vector (const PARAMETERS * restrict const params,
     memcpy((*target_vector + actual_shift), &params->error_function, data_size);
     actual_shift += data_size;
 
-    data_size = sizeof(unsigned int);
+    data_size = sizeof(uint32_t);
     memcpy((*target_vector + actual_shift), &params->random_seed, data_size);
     actual_shift += data_size;
 

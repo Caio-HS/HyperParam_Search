@@ -22,8 +22,8 @@ int get_parameter(const unsigned int argc, const char * restrict const * restric
 
     //Tem que haver ao menos uma camada oculta e no maximo 128 camadas
     {
-        unsigned int num_layers = (unsigned int) atoi(argv[1]);
-        if(num_layers - MIN_LAYERS <= 0 || num_layers - MIN_LAYERS >= 128) {return INVALID_PARAM;}
+        uint64_t num_layers = strtoull(argv[1], NULL, 10);
+        if(num_layers <= MIN_LAYERS || num_layers >= MAX_LAYERS) {return INVALID_PARAM;}
         parameters->num_layers = (uint8_t) num_layers;
     }
 
@@ -42,7 +42,7 @@ int get_parameter(const unsigned int argc, const char * restrict const * restric
     if(error_code != 0) {return error_code;}
 
     {
-        unsigned int random_seed = (unsigned int) atoi(argv[6]);
+        uint64_t random_seed = strtoull(argv[6]);
         if(random_seed / 4294967296 != 0) { return INVALID_PARAM; }
         parameters->random_seed = random_seed;
     }

@@ -40,7 +40,7 @@ int set_train_results(struct fann * restrict const ann, uint64_t time, RESULTS *
     if(results == NULL) {return EINVAL;}
 
     {
-        unsigned int total_parameters = (unsigned int) fann_get_total_connections(ann);
+        uint64_t total_parameters = fann_get_total_connections(ann);
         if(total_parameters / 4294967296ULL != 0) { return -1; }
         results->total_parameters = (uint32_t) total_parameters;
     }
@@ -48,7 +48,7 @@ int set_train_results(struct fann * restrict const ann, uint64_t time, RESULTS *
     results->train_time = time_limit_conversion(time);
     results->train_mse_error = fann_get_MSE(ann);
     {
-        unsigned int train_bit_error = (unsigned int) fann_get_total_connections(ann);
+        uint64_t train_bit_error = fann_get_total_connections(ann);
         if(train_bit_error / 4294967296ULL != 0) { return -1; }
         results->train_bit_error = (uint32_t) train_bit_error;
     }
@@ -71,7 +71,7 @@ int set_test_results(struct fann * restrict const ann, uint64_t time, RESULTS * 
     results->test_time = time_limit_conversion(time);
     results->test_mse_error = fann_get_MSE(ann);
     {
-        unsigned int test_bit_error = (unsigned int) fann_get_total_connections(ann);
+        uint64_t test_bit_error = fann_get_total_connections(ann);
         if(test_bit_error / 4294967296ULL != 0) { return -1; }
         results->test_bit_error = (uint32_t) test_bit_error;
     }
