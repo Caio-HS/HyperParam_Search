@@ -25,7 +25,7 @@ int set_parameters_hash(const PARAMETERS * restrict const params, RESULTS * rest
     error_code = get_parameters_vector(params, &parameters_vector, &size);
     if(error_code != 0) { return error_code; }
 
-    results->parameters_hash = XXH64(parameters_vector, (size_t) size, HASHS_SEED);
+    results->parameters_hash = (int64_t) XXH64(parameters_vector, (size_t) size, HASHS_SEED);
 
     free(parameters_vector);
     

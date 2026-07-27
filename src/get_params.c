@@ -21,10 +21,13 @@ int get_parameter(const unsigned int argc, const char * restrict const * restric
     if(argc < MINIMUM_PARAMS) {return INCORRECT_PARAMS_COUNT;}
 
     //Tem que haver ao menos uma camada oculta e no maximo 128 camadas
-    parameters->num_layers = (unsigned int) atoi(argv[1]);
-    if(parameters->num_layers <= 0 || parameters->num_layers >= 128) {return INVALID_PARAM;}
+    {
+        unsigned int num_layers = (unsigned int) atoi(argv[1]);
+        if(num_layers - MIN_LAYERS <= 0 || num_layers - MIN_LAYERS >= 128) {return INVALID_PARAM;}
+        parameters->num_layers = (uint8_t) num_layers;
+    }
 
-    if(argc != MINIMUM_PARAMS + (parameters->num_layers - 1) * 2) {return INCORRECT_PARAMS_COUNT;}
+    if(argc != MINIMUM_PARAMS + (parameters->num_layers - 1u) * 2u) {return INCORRECT_PARAMS_COUNT;}
 
     parameters->sparsity = (float) atof(argv[2]);
     if (parameters->sparsity < 0 || parameters->sparsity > 1) {return INVALID_PARAM;}
@@ -38,7 +41,11 @@ int get_parameter(const unsigned int argc, const char * restrict const * restric
     error_code = select_error_function(atoi(argv[5]), &parameters->error_function);
     if(error_code != 0) {return error_code;}
 
-    parameters->random_seed = (unsigned int) atoi(argv[6]);
+    {
+        unsigned int random_seed = (unsigned int) atoi(argv[6]);
+        if(random_seed / 4294967296 != 0) { return INVALID_PARAM; }
+        parameters->random_seed = random_seed;
+    }
 
     parameters->activation_by_layer = malloc(sizeof(ACTIV_FUNC) * parameters->num_layers);
     if(parameters->activation_by_layer == NULL) {return ENOMEM;}

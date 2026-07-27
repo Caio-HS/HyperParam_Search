@@ -11,21 +11,21 @@
 
 struct results
 {
-    uint64_t total_parameters;
-    uint64_t parameters_hash;
-    uint64_t data_points_needed; //How much data entries are needed to reach the target error
-    uint64_t version;
-    uint64_t train_time;
+    uint32_t total_parameters;
+    int64_t parameters_hash;
+    uint32_t data_points_needed; //How much data entries are needed to reach the target error
+    uint16_t version;
+    int64_t train_time;
     float train_mse_error;
-    uint64_t train_bit_error;
-    uint64_t test_time;
+    uint32_t train_bit_error;
+    int64_t test_time;
     float test_mse_error;
-    uint64_t test_bit_error;
+    uint32_t test_bit_error;
 };
 
 struct context
 {
-    uint64_t last_epoch;
+    uint32_t last_epoch;
 };
 
 typedef struct context CONTEXT;

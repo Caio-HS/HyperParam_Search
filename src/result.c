@@ -13,6 +13,7 @@
 #include "get_params.h"
 
 static int FANN_API callback_function(struct fann *ann, struct fann_train_data *train, unsigned int max_epochs, unsigned int epochs_between_reports, float desired_error, unsigned int epochs);
+static int64_t time_limit_conversion(uint64_t time);
 
 //função temporaria para testes
 //static void print_results(const RESULTS * restrict const results);
@@ -38,10 +39,20 @@ int set_train_results(struct fann * restrict const ann, uint64_t time, RESULTS *
     if(ann == NULL) {return EINVAL;}
     if(results == NULL) {return EINVAL;}
 
-    results->total_parameters = (uint64_t) fann_get_total_connections(ann);
-    results->train_time = time;
+    {
+        unsigned int total_parameters = (unsigned int) fann_get_total_connections(ann);
+        if(total_parameters / 4294967296ULL != 0) { return -1; }
+        results->total_parameters = (uint32_t) total_parameters;
+    }
+    
+    results->train_time = time_limit_conversion(time);
     results->train_mse_error = fann_get_MSE(ann);
-    results->train_bit_error = (uint64_t) fann_get_bit_fail(ann);
+    {
+        unsigned int train_bit_error = (unsigned int) fann_get_total_connections(ann);
+        if(train_bit_error / 4294967296ULL != 0) { return -1; }
+        results->train_bit_error = (uint32_t) train_bit_error;
+    }
+
 
     const CONTEXT * restrict const context = (const CONTEXT *) fann_get_user_data(ann);
     if(context == NULL) {return EINVAL;}
@@ -57,9 +68,13 @@ int set_test_results(struct fann * restrict const ann, uint64_t time, RESULTS * 
     if(ann == NULL) {return EINVAL;}
     if(results == NULL) {return EINVAL;}
 
-    results->test_time = time;
+    results->test_time = time_limit_conversion(time);
     results->test_mse_error = fann_get_MSE(ann);
-    results->test_bit_error = (uint64_t) fann_get_bit_fail(ann);
+    {
+        unsigned int test_bit_error = (unsigned int) fann_get_total_connections(ann);
+        if(test_bit_error / 4294967296ULL != 0) { return -1; }
+        results->test_bit_error = (uint32_t) test_bit_error;
+    }
 
     return 0;
 }
@@ -69,16 +84,16 @@ int send_results(const RESULTS * restrict const results, const PARAMETERS * cons
     if(results == NULL) {return EINVAL;}
     if(params == NULL) {return EINVAL;}
 
-    fwrite(&results->total_parameters, sizeof(unsigned int), 1, stdout);
-    fwrite(&results->parameters_hash, sizeof(unsigned int), 1, stdout);
-    fwrite(&results->data_points_needed, sizeof(unsigned int), 1, stdout);
-    fwrite(&results->version, sizeof(unsigned int), 1, stdout);
-    fwrite(&results->train_time, sizeof(unsigned int), 1, stdout);
+    fwrite(&results->total_parameters, sizeof(uint32_t), 1, stdout);
+    fwrite(&results->parameters_hash, sizeof(int64_t), 1, stdout);
+    fwrite(&results->data_points_needed, sizeof(uint32_t), 1, stdout);
+    fwrite(&results->version, sizeof(uint16_t), 1, stdout);
+    fwrite(&results->train_time, sizeof(int64_t), 1, stdout);
     fwrite(&results->train_mse_error, sizeof(float), 1, stdout);
-    fwrite(&results->train_bit_error, sizeof(unsigned int), 1, stdout);
-    fwrite(&results->test_time, sizeof(unsigned int), 1, stdout);
+    fwrite(&results->train_bit_error, sizeof(uint32_t), 1, stdout);
+    fwrite(&results->test_time, sizeof(int64_t), 1, stdout);
     fwrite(&results->test_mse_error, sizeof(float), 1, stdout);
-    fwrite(&results->test_bit_error, sizeof(unsigned int), 1, stdout);
+    fwrite(&results->test_bit_error, sizeof(uint32_t), 1, stdout);
     
     return 0;
 }
@@ -101,6 +116,11 @@ static int FANN_API callback_function(struct fann *ann, struct fann_train_data *
     
     context->last_epoch += 1;
     return 0;
+}
+
+static int64_t time_limit_conversion(uint64_t time)
+{
+    return time / 9223372036854775808ULL != 0ULL ? -1 : (int64_t) time;
 }
 
 /*

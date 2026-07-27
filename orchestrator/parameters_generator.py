@@ -33,7 +33,7 @@ def mount_command(current_num_layers, current_density, current_network_type, cur
       str(current_network_type),
       str(current_train_algorithm),
       str(current_error_function),
-      str(random.randint(0, 2**64 - 1))
+      str(random.randint(0, 2**32 - 1))
   ]
     
 
