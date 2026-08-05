@@ -8,6 +8,7 @@ CC = gcc
 SRC_DIR = src
 INC_DIR = include
 OBJ_BASE_DIR = obj
+DEP_DIR = dep
 OPTIMIZATION_REPORTS_DIR = reports/optimization
 
 # --- Flags de Compilacao ---
@@ -40,7 +41,8 @@ DEBUG_FLAGS = -O0 -Wall -Wextra -g -Wformat=2 -Wconversion -Wcast-qual \
               -Wanalyzer-use-of-pointer-in-stale-stack-frame -Wanalyzer-write-to-const \
               -Wanalyzer-write-to-string-literal -Wvector-operation-performance \
               -Wanalyzer-too-complex --param=analyzer-max-enodes-per-program-point=260000 \
-              -fsanitize=address,undefined,leak -fstack-protector-strong
+              -fsanitize=address,undefined,leak -fstack-protector-strong 
+
 
 # Flags de Execucao (Release)
 RELEASE_FLAGS = -O3 -march=native -flto -DNDEBUG -Wall \
@@ -68,10 +70,11 @@ endif
 
 SOURCES = $(wildcard $(SRC_DIR)/*.c)
 OBJECTS = $(SOURCES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+DEPFILES = $(SOURCES:$(SRC_DIR)/%.c=$(DEP_DIR)/%.d)
 
 # --- Regras ---
 
-all: $(TARGET)
+all: $(DEPFILES) $(TARGET) 
 
 # Compilacao do executavel
 $(TARGET): $(OBJECTS)
@@ -88,6 +91,14 @@ $(OBJ_DIR):
 	@echo "[INFO] Inicializando estrutura de diretorios..."
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OPTIMIZATION_REPORTS_DIR)
+	@mkdir -p $(DEP_DIR)
+
+# Geracao dependencias
+$(DEP_DIR)/%.d: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	@echo "[DEP]  Gerando dependências de $<"
+	@$(CC) $(CFLAGS) -MM -MT $< -MF $@ $<
+
+
 
 # Atalhos praticos
 sao_pedro:
@@ -101,6 +112,6 @@ release:
 
 clean:
 	@echo "[CLEAN] Removendo arquivos gerados..."
-	@rm -rf $(OBJ_BASE_DIR) $(TARGET) $(OPTIMIZATION_REPORTS_DIR)
+	@rm -rf $(OBJ_BASE_DIR) $(TARGET) $(OPTIMIZATION_REPORTS_DIR) $(DEP_DIR)
 
 .PHONY: all debug sao_pedro release clean
